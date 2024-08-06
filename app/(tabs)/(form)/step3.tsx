@@ -6,7 +6,7 @@ import { useAppTheme } from "../../_layout";
 
 export const Text = customText<"customVariant">();
 
-export default function Step1() {
+export default function Step3() {
   const {
     colors: { ...colors },
   } = useAppTheme();
@@ -19,7 +19,7 @@ export default function Step1() {
       }}
     >
       <Text style={{ fontSize: 30, color: colors.brandPrimary }}>
-        Soy el paso 1
+        Soy el paso 3
       </Text>
     </View>
   );

@@ -80,7 +80,7 @@ export default function MyApp() {
         }}
       />
       <Tab.Screen
-        name="Form"
+        name="Shipment"
         component={form}
         options={{
           tabBarLabel: "barcode",

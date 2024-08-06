@@ -6,7 +6,7 @@ import { useAppTheme } from "../../_layout";
 
 export const Text = customText<"customVariant">();
 
-export default function Index() {
+export default function Step2() {
   const {
     colors: { ...colors },
   } = useAppTheme();
