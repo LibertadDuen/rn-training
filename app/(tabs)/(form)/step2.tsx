@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { View } from "react-native";
 import { customText } from "react-native-paper";
-import { useAppTheme } from "../_layout";
+import { useAppTheme } from "../../_layout";
 
 export const Text = customText<"customVariant">();
 
@@ -19,7 +19,7 @@ export default function Index() {
       }}
     >
       <Text style={{ fontSize: 30, color: colors.brandPrimary }}>
-        Soy el Home
+        Soy el paso 2
       </Text>
     </View>
   );

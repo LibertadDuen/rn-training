@@ -6,7 +6,7 @@ import { useAppTheme } from "../_layout";
 
 export const Text = customText<"customVariant">();
 
-export default function Index() {
+export default function Form() {
   const {
     colors: { ...colors },
   } = useAppTheme();
@@ -18,8 +18,8 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-      <Text style={{ fontSize: 30, color: colors.brandPrimary }}>
-        Soy el Home
+      <Text style={{ fontSize: 30, color: colors.brandPrimaryDark }}>
+        Soy la cámara
       </Text>
     </View>
   );
