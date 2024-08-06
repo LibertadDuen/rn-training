@@ -3,13 +3,18 @@ import React from "react";
 import { CommonActions } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { BottomNavigation } from "react-native-paper";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { Icon } from "react-native-paper";
 import index from "./index";
 import form from "./form";
+import camera from "./camera";
+import { useAppTheme } from "../_layout";
 
 const Tab = createBottomTabNavigator();
 
 export default function MyApp() {
+  const {
+    colors: { ...colors },
+  } = useAppTheme();
   return (
     <Tab.Navigator
       screenOptions={{
@@ -56,17 +61,33 @@ export default function MyApp() {
         options={{
           tabBarLabel: "Home",
           tabBarIcon: ({ color, size }) => {
-            return <Icon name="home" size={size} color={color} />;
+            return (
+              <Icon source="alien" color={colors.brandPrimary} size={20} />
+            );
           },
         }}
       />
       <Tab.Screen
-        name="Settings"
+        name="Camera"
+        component={camera}
+        options={{
+          tabBarLabel: "camera",
+          tabBarIcon: ({ color, size }) => {
+            return (
+              <Icon source="camera" color={colors.brandPrimary} size={20} />
+            );
+          },
+        }}
+      />
+      <Tab.Screen
+        name="Form"
         component={form}
         options={{
-          tabBarLabel: "Form",
+          tabBarLabel: "barcode",
           tabBarIcon: ({ color, size }) => {
-            return <Icon name="cog" size={size} color={color} />;
+            return (
+              <Icon source="barcode" color={colors.brandPrimary} size={20} />
+            );
           },
         }}
       />
