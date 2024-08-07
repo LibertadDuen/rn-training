@@ -32,7 +32,12 @@ const StepForm = () => {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       {renderStep()}
-      <View style={{ flexDirection: "row", marginTop: 20 }}>
+      <View
+        style={{
+          flexDirection: "row",
+          marginTop: 20,
+        }}
+      >
         {currentStep > 1 && <IconButton icon="arrow-left" onPress={prevStep} />}
         {currentStep < 3 && (
           <IconButton icon="arrow-right" onPress={nextStep} />

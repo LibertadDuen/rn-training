@@ -62,7 +62,7 @@ export default function MyApp() {
           tabBarLabel: "Home",
           tabBarIcon: ({ color, size }) => {
             return (
-              <Icon source="alien" color={colors.brandPrimary} size={20} />
+              <Icon source="alien" color={colors.brandPrimary} size={24} />
             );
           },
         }}
@@ -74,19 +74,19 @@ export default function MyApp() {
           tabBarLabel: "camera",
           tabBarIcon: ({ color, size }) => {
             return (
-              <Icon source="camera" color={colors.brandPrimary} size={20} />
+              <Icon source="camera" color={colors.brandPrimary} size={24} />
             );
           },
         }}
       />
       <Tab.Screen
-        name="Shipment"
+        name="Programar envío"
         component={form}
         options={{
-          tabBarLabel: "barcode",
+          tabBarLabel: "Truck",
           tabBarIcon: ({ color, size }) => {
             return (
-              <Icon source="barcode" color={colors.brandPrimary} size={20} />
+              <Icon source="truck" color={colors.brandPrimary} size={24} />
             );
           },
         }}

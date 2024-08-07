@@ -1,26 +1,42 @@
 import * as React from "react";
 
-import { View } from "react-native";
-import { customText } from "react-native-paper";
-import { useAppTheme } from "../../_layout";
-
-export const Text = customText<"customVariant">();
+import { View, StyleSheet } from "react-native";
+import { Text, RadioButton, Divider } from "react-native-paper";
+import { useGlobalStyles } from "@/styles/globalStyles";
 
 export default function Step2() {
-  const {
-    colors: { ...colors },
-  } = useAppTheme();
+  const styles = useGlobalStyles();
+  const [value, setValue] = React.useState("first");
+
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text style={{ fontSize: 30, color: colors.brandPrimary }}>
-        Soy el paso 2
-      </Text>
+    <View style={styles.screenContainer}>
+      <View>
+        <View>
+          <Text style={styles.title}>Programa un nuevo envío</Text>
+          <Divider style={styles.divider} />
+        </View>
+        <View>
+          <Text style={styles.subtitle}>Destino</Text>
+          <Text style={styles.text}>
+            Selecciona uno de tus clientes previamente registrados.
+          </Text>
+        </View>
+      </View>
+      <View>
+        <RadioButton.Group
+          onValueChange={(newValue) => setValue(newValue)}
+          value={value}
+        >
+          <View>
+            <Text>First</Text>
+            <RadioButton value="first" />
+          </View>
+          <View>
+            <Text>Second</Text>
+            <RadioButton value="second" />
+          </View>
+        </RadioButton.Group>
+      </View>
     </View>
   );
 }
