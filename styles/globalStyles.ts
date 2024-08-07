@@ -18,7 +18,6 @@ export const useGlobalStyles = () => {
     subtitle: {
       fontSize: 18,
       fontWeight: "700",
-      marginBottom: 8,
     },
     text: {
       fontSize: 16,
