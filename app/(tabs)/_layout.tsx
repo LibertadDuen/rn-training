@@ -56,25 +56,13 @@ export default function MyApp() {
       )}
     >
       <Tab.Screen
-        name="Home"
+        name="Inicio"
         component={index}
         options={{
           tabBarLabel: "Home",
           tabBarIcon: ({ color, size }) => {
             return (
               <Icon source="alien" color={colors.brandPrimary} size={24} />
-            );
-          },
-        }}
-      />
-      <Tab.Screen
-        name="Camera"
-        component={camera}
-        options={{
-          tabBarLabel: "camera",
-          tabBarIcon: ({ color, size }) => {
-            return (
-              <Icon source="camera" color={colors.brandPrimary} size={24} />
             );
           },
         }}
@@ -87,6 +75,18 @@ export default function MyApp() {
           tabBarIcon: ({ color, size }) => {
             return (
               <Icon source="truck" color={colors.brandPrimary} size={24} />
+            );
+          },
+        }}
+      />
+      <Tab.Screen
+        name="Subir evidencia"
+        component={camera}
+        options={{
+          tabBarLabel: "camera",
+          tabBarIcon: ({ color, size }) => {
+            return (
+              <Icon source="camera" color={colors.brandPrimary} size={24} />
             );
           },
         }}

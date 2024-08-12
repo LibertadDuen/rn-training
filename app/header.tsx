@@ -2,11 +2,10 @@ import * as React from "react";
 import { Appbar } from "react-native-paper";
 import { Image, View } from "react-native";
 import { useGlobalStyles } from "@/styles/globalStyles";
-import { Text, Divider, Icon } from "react-native-paper";
+import { Text, Icon } from "react-native-paper";
 import { AppTheme, useAppTheme } from "@/app/_layout";
 
 const Header = () => {
-  const styles = useGlobalStyles();
   const theme: AppTheme = useAppTheme();
 
   return (
@@ -26,7 +25,7 @@ const Header = () => {
       <View style={{ flexDirection: "row", gap: 8 }}>
         <Icon source="account-circle" size={24} color="white" />
         <Text style={{ color: "white", fontSize: 16, fontFamily: "Work-Sans" }}>
-          Mario
+          Mario Hernández
         </Text>
       </View>
     </Appbar.Header>

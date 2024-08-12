@@ -1,12 +1,25 @@
 import * as React from "react";
-
 import { View } from "react-native";
 import { Text, RadioButton, Divider, Icon } from "react-native-paper";
 import { useGlobalStyles } from "@/styles/globalStyles";
 
-export default function StepTwoForm() {
+interface StepTwoFormProps {
+  stepTwoData: string | undefined;
+  setStepTwoData: (value?: string | undefined) => void;
+  error: string | undefined;
+}
+
+export default function StepTwoForm({
+  stepTwoData,
+  setStepTwoData,
+  error,
+}: StepTwoFormProps) {
   const styles = useGlobalStyles();
-  const [value, setValue] = React.useState("0");
+  const [value, setValue] = React.useState(stepTwoData || "0");
+
+  React.useEffect(() => {
+    setStepTwoData(value);
+  }, [value]);
 
   return (
     <View style={styles.screenContainer}>
@@ -31,22 +44,29 @@ export default function StepTwoForm() {
           value={value}
         >
           <View style={styles.radioButton}>
-            <RadioButton value="1" />
-            <Text style={styles.radioButtonLabel}>Juan Pérez</Text>
+            <RadioButton value="option1" />
+            <Text style={styles.radioButtonLabel}>Herman Melville</Text>
           </View>
           <View style={styles.radioButton}>
-            <RadioButton value="2" />
-            <Text style={styles.radioButtonLabel}>Roberto Martínez</Text>
+            <RadioButton value="option2" />
+            <Text style={styles.radioButtonLabel}>Hermann Hesse</Text>
           </View>
           <View style={styles.radioButton}>
-            <RadioButton value="3" />
-            <Text style={styles.radioButtonLabel}>Alfredo Sánchez</Text>
+            <RadioButton value="option3" />
+            <Text style={styles.radioButtonLabel}>Jorge Luis Borges</Text>
           </View>
           <View style={styles.radioButton}>
-            <RadioButton value="4" />
-            <Text style={styles.radioButtonLabel}>Raúl Vega</Text>
+            <RadioButton value="option4" />
+            <Text style={styles.radioButtonLabel}>
+              Howard Phillips Lovecraft
+            </Text>
+          </View>
+          <View style={styles.radioButton}>
+            <RadioButton value="option5" />
+            <Text style={styles.radioButtonLabel}>Bram Stoker</Text>
           </View>
         </RadioButton.Group>
+        {error && <Text style={{ color: "red", marginTop: 8 }}>{error}</Text>}
       </View>
     </View>
   );

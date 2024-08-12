@@ -2,18 +2,27 @@ import React, { useState } from "react";
 
 import { View } from "react-native";
 import { Dropdown } from "react-native-paper-dropdown";
-import { Text, Divider, Icon } from "react-native-paper";
+import { Text, Divider, Icon, Button, Chip } from "react-native-paper";
 import { useGlobalStyles } from "@/styles/globalStyles";
 
-export default function StepOneForm() {
-  const [headquarters, setHQ] = useState<string>();
-  const [value, setValue] = React.useState("first");
+interface StepOneFormProps {
+  headquarters: string | undefined;
+  setHQ: (value?: string | undefined) => void;
+  error: string | undefined;
+}
+
+export default function StepOneForm({
+  headquarters,
+  setHQ,
+  error,
+}: StepOneFormProps) {
   const styles = useGlobalStyles();
 
   const dropDownItems = [
     { label: "Norte", value: "option1" },
     { label: "Centro Sur", value: "option2" },
     { label: "Av. Niños Héroes", value: "option3" },
+    { label: "Roma Norte", value: "option4" },
   ];
 
   return (
@@ -33,12 +42,14 @@ export default function StepOneForm() {
       </View>
       <View>
         <Dropdown
+          hideMenuHeader={false}
           label="Sede de origen"
           placeholder="Selecciona una sede"
           options={dropDownItems}
           value={headquarters}
           onSelect={setHQ}
         />
+        {error && <Text style={{ color: "red", marginTop: 8 }}>{error}</Text>}
       </View>
     </View>
   );
