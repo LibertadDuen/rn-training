@@ -9,8 +9,7 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import "react-native-reanimated";
-import { View } from "react-native";
-import { Text } from "react-native-paper";
+import Header from "./header";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -75,14 +74,7 @@ export default function RootLayout() {
 
   return (
     <PaperProvider theme={theme}>
-      <Appbar.Header
-        mode="center-aligned"
-        style={{ backgroundColor: theme.colors.brandTertiary }}
-      >
-        <Appbar.BackAction onPress={_goBack} />
-        <Appbar.Content color={theme.colors.brandQuarterly} title="Oxito" />
-      </Appbar.Header>
-
+      <Header />
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       </Stack>
