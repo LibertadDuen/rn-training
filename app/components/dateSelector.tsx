@@ -9,11 +9,10 @@ import DateTimePicker, {
 import { useAppTheme } from "@/app/_layout";
 
 interface DateTimeSelectorProps {
-  mode: "date" | "time";
   title: string;
 }
 
-export default function DateTimeSelector(props: DateTimeSelectorProps) {
+export default function DateSelector(props: DateTimeSelectorProps) {
   const styles = useGlobalStyles();
   const {
     colors: { ...colors },
@@ -21,7 +20,7 @@ export default function DateTimeSelector(props: DateTimeSelectorProps) {
 
   const openAndroidCalendar = () => {
     DateTimePickerAndroid.open({
-      mode: props.mode,
+      mode: "date",
       value: new Date(),
       minimumDate: new Date(),
     });
@@ -42,18 +41,13 @@ export default function DateTimeSelector(props: DateTimeSelectorProps) {
       }}
     >
       <Text style={styles.subtitle}>{props.title}</Text>
-      {Platform.OS === "android" && props.mode === "date" ? (
+      {Platform.OS === "android" ? (
         <IconButton icon="calendar" onPress={() => openAndroidCalendar()} />
-      ) : Platform.OS === "android" && props.mode === "time" ? (
-        <IconButton
-          icon="clock-time-four-outline"
-          onPress={() => openAndroidCalendar()}
-        />
       ) : (
         <DateTimePicker
           value={new Date()}
           minimumDate={new Date()}
-          mode={props.mode}
+          mode="date"
         />
       )}
     </View>
