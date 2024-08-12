@@ -3,9 +3,11 @@ import { View } from "react-native";
 import Step1 from "./(form)/step1";
 import Step2 from "./(form)/step2";
 import Step3 from "./(form)/step3";
-import { IconButton } from "react-native-paper";
+import { Button, IconButton } from "react-native-paper";
+import { useGlobalStyles } from "@/styles/globalStyles";
 
 const StepForm = () => {
+  const styles = useGlobalStyles();
   const [currentStep, setCurrentStep] = useState(1);
 
   const nextStep = () => {
@@ -30,17 +32,41 @@ const StepForm = () => {
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+    <View
+      style={{
+        flex: 1,
+        marginHorizontal: 16,
+      }}
+    >
       {renderStep()}
       <View
         style={{
-          flexDirection: "row",
-          marginTop: 20,
+          justifyContent: "center",
+          gap: 16,
+          flexDirection: "column",
+          alignItems: "center",
+          marginBottom: 16,
         }}
       >
-        {currentStep > 1 && <IconButton icon="arrow-left" onPress={prevStep} />}
         {currentStep < 3 && (
-          <IconButton icon="arrow-right" onPress={nextStep} />
+          <Button
+            mode="contained"
+            style={styles.primaryButton}
+            labelStyle={styles.primaryButtonLabel}
+            onPress={nextStep}
+          >
+            Continuar
+          </Button>
+        )}
+        {currentStep > 1 && (
+          <Button
+            mode="contained"
+            onPress={prevStep}
+            style={styles.tertiaryButton}
+            labelStyle={styles.tertiaryButtonLabel}
+          >
+            Regresar
+          </Button>
         )}
       </View>
     </View>

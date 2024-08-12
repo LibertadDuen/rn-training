@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 
-import { View, StyleSheet } from "react-native";
+import { View } from "react-native";
 import { Dropdown } from "react-native-paper-dropdown";
-import { Text, Button, Divider } from "react-native-paper";
+import { Text, Divider, Icon } from "react-native-paper";
+import { useGlobalStyles } from "@/styles/globalStyles";
 
 export default function StepOneForm() {
   const [headquarters, setHQ] = useState<string>();
   const [value, setValue] = React.useState("first");
+  const styles = useGlobalStyles();
 
   const dropDownItems = [
     { label: "Norte", value: "option1" },
@@ -15,88 +17,29 @@ export default function StepOneForm() {
   ];
 
   return (
-    <View style={styles.container}>
+    <View style={styles.screenContainer}>
       <View>
-        <View>
-          <Text style={styles.title}>Programa un nuevo envío</Text>
-          <Divider style={styles.divider} />
-        </View>
-        <View>
-          <Text style={styles.subtitle}>Origen</Text>
-          <Text style={styles.text}>
-            Selecciona una de tus sedes previamente registradas.
-          </Text>
-        </View>
-        <View>
-          <Dropdown
-            label="Sede de origen"
-            placeholder="Selecciona una sede"
-            options={dropDownItems}
-            value={headquarters}
-            onSelect={setHQ}
-          />
-        </View>
+        <Text style={styles.title}>Programa un nuevo envío</Text>
+        <Divider style={styles.divider} />
       </View>
-      <View style={{ marginTop: 16 }}>
-        <Button
-          mode="contained"
-          onPress={() => console.log("Pressed")}
-          style={styles.primaryButton}
-          labelStyle={styles.primaryButtonLabel}
-        >
-          Continuar
-        </Button>
+      <View>
+        <View style={{ flexDirection: "row", gap: 8 }}>
+          <Icon source="office-building" size={24} color="black" />
+          <Text style={styles.subtitle}>Origen</Text>
+        </View>
+        <Text style={styles.text}>
+          Selecciona una de tus sedes previamente registradas.
+        </Text>
+      </View>
+      <View>
+        <Dropdown
+          label="Sede de origen"
+          placeholder="Selecciona una sede"
+          options={dropDownItems}
+          value={headquarters}
+          onSelect={setHQ}
+        />
       </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginHorizontal: 8,
-  },
-  firstContainer: {
-    gap: 12,
-    backgroundColor: "#fff",
-  },
-  secondContainer: {
-    gap: 12,
-    backgroundColor: "#fff",
-    marginTop: 24,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 700,
-    color: "brandQuarterlyDark2",
-    marginTop: 16,
-  },
-  subtitle: {
-    fontSize: 18,
-    fontWeight: 700,
-  },
-  text: {
-    fontSize: 16,
-    fontWeight: 500,
-  },
-  divider: {
-    borderColor: "brandQuarterlyDark2",
-    borderWidth: 0.5,
-    marginTop: 8,
-  },
-  primaryButton: {
-    display: "flex",
-    backgroundColor: "brandTertiary",
-    height: 48,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 5,
-  },
-  primaryButtonLabel: {
-    fontSize: 18,
-    color: "#ffffff",
-  },
-  dropDown: {
-    borderRadius: 10,
-  },
-});

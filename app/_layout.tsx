@@ -1,9 +1,4 @@
 import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from "@react-navigation/native";
-import {
   PaperProvider,
   MD3LightTheme,
   useTheme,
@@ -14,6 +9,8 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import "react-native-reanimated";
+import { View } from "react-native";
+import { Text } from "react-native-paper";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -42,6 +39,17 @@ const theme = {
     brandQuarterlyLight: "#EFEFEF",
     brandQuarterlyLight1: "#F6F6F6",
   },
+  fonts: {
+    ...MD3LightTheme.fonts,
+    medium: {
+      fontFamily: "Roboto-Medium",
+      weight: "500",
+    },
+    bold: {
+      fontFamily: "Work-Sans",
+      weight: "700",
+    },
+  },
 };
 
 export type AppTheme = typeof theme;
@@ -50,7 +58,8 @@ export const useAppTheme = () => useTheme<AppTheme>();
 
 export default function RootLayout() {
   const [loaded] = useFonts({
-    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+    "Roboto-Medium": require("../assets/fonts/Roboto-Medium.ttf"),
+    "Work-Sans": require("../assets/fonts/WorkSans-Bold.ttf"),
   });
 
   useEffect(() => {
@@ -73,6 +82,7 @@ export default function RootLayout() {
         <Appbar.BackAction onPress={_goBack} />
         <Appbar.Content color={theme.colors.brandQuarterly} title="Oxito" />
       </Appbar.Header>
+
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       </Stack>
