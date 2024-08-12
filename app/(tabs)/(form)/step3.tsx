@@ -8,7 +8,7 @@ import { useGlobalStyles } from "@/styles/globalStyles";
 
 import { useAppTheme } from "@/app/_layout";
 
-export default function Step3() {
+export default function StepThreeForm() {
   const styles = useGlobalStyles();
   const {
     colors: { ...colors },

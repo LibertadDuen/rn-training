@@ -19,7 +19,7 @@ export default function TimeSelector(props: DateTimeSelectorProps) {
   } = useAppTheme();
 
   return (
-    <View>
+    <View style={{ marginBottom: 16 }}>
       <Text style={styles.subtitle}>{props.title}</Text>
       <View
         style={{
@@ -41,7 +41,7 @@ export default function TimeSelector(props: DateTimeSelectorProps) {
           outlineColor={colors.brandSecondaryDark2}
           outlineStyle={{ borderRadius: 10 }}
           style={{ backgroundColor: "#f2f2f2", width: "45%" }}
-          placeholder="07:00"
+          placeholder="10:00"
         />
       </View>
     </View>
