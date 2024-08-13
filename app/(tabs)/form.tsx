@@ -7,7 +7,7 @@ import StepFourForm from "./(form)/step4";
 import { Button } from "react-native-paper";
 import { useGlobalStyles } from "@/styles/globalStyles";
 
-const StepForm = () => {
+export default function StepForm() {
   const styles = useGlobalStyles();
   const [shippingSite, setShippingSite] = useState();
   const [client, setClient] = useState();
@@ -17,21 +17,44 @@ const StepForm = () => {
   const [timeDelivery, setTimeDelivery] = useState();
 
   const [currentStep, setCurrentStep] = useState(1);
+  const [headquarters, setHQ] = useState<string>();
+  const [stepTwoData, setStepTwoData] = useState<string>();
+  const [error, setError] = useState<string>();
+
+  const validateStepOne = () => {
+    if (!shippingSite) {
+      setError("Por favor, selecciona una sede.");
+      return false;
+    }
+    setError(undefined);
+    return true;
+  };
+
+  const validateStepTwo = () => {
+    if (!client) {
+      setError("Por favor, selecciona uno de tus clientes.");
+      return false;
+    }
+    setError(undefined);
+    return true;
+  };
 
   const nextStep = () => {
-    setCurrentStep((prevStep) => prevStep + 1);
+    if (currentStep === 1 && !validateStepOne()) return;
+    if (currentStep === 2 && !validateStepTwo()) return;
+    setCurrentStep((prev) => prev + 1);
   };
 
   const prevStep = () => {
-    setCurrentStep((prevStep) => prevStep - 1);
+    setCurrentStep((prev) => prev - 1);
   };
 
   const renderStep = () => {
     switch (currentStep) {
       case 1:
-        return <StepOneForm setShippingSite={setShippingSite} />;
+        return <StepOneForm setShippingSite={setShippingSite} error={error} />;
       case 2:
-        return <StepTwoForm setClient={setClient} />;
+        return <StepTwoForm setClient={setClient} error={error} />;
       case 3:
         return <StepThreeForm />;
       case 4:
@@ -44,7 +67,7 @@ const StepForm = () => {
           />
         );
       default:
-        return <StepOneForm setShippingSite={setShippingSite} />;
+        return <StepOneForm setShippingSite={setShippingSite} error={error} />;
     }
   };
 
@@ -88,6 +111,4 @@ const StepForm = () => {
       </View>
     </View>
   );
-};
-
-export default StepForm;
+}

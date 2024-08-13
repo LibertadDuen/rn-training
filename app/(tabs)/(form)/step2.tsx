@@ -1,14 +1,14 @@
 import * as React from "react";
-
 import { View } from "react-native";
 import { Text, RadioButton, Divider, Icon } from "react-native-paper";
 import { useGlobalStyles } from "@/styles/globalStyles";
 
 interface StepTwoFormProps {
   setClient: (client: any) => void;
+  error: string | undefined;
 }
 
-export default function StepTwoForm({ setClient }: StepTwoFormProps) {
+export default function StepTwoForm({ setClient, error }: StepTwoFormProps) {
   const styles = useGlobalStyles();
   const [value, setValue] = React.useState("0");
 
@@ -53,6 +53,7 @@ export default function StepTwoForm({ setClient }: StepTwoFormProps) {
             <Text style={styles.radioButtonLabel}>Raúl Vega</Text>
           </View>
         </RadioButton.Group>
+        {error && <Text style={{ color: "red", marginTop: 8 }}>{error}</Text>}
       </View>
     </View>
   );

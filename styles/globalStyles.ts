@@ -10,8 +10,8 @@ export const useGlobalStyles = () => {
       justifyContent: "flex-start",
     },
     title: {
-      marginTop: 16,
       fontSize: 20,
+      marginTop: 16,
       color: theme.colors.brandQuarterlyDark2,
       fontFamily: "Work-Sans",
     },

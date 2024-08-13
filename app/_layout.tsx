@@ -1,9 +1,4 @@
-import {
-  PaperProvider,
-  MD3LightTheme,
-  useTheme,
-  Appbar,
-} from "react-native-paper";
+import { PaperProvider, MD3LightTheme, useTheme } from "react-native-paper";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";

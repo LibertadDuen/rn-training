@@ -2,14 +2,18 @@ import React, { useState } from "react";
 
 import { View } from "react-native";
 import { Dropdown } from "react-native-paper-dropdown";
-import { Text, Divider, Icon } from "react-native-paper";
+import { Text, Divider, Icon, Button, Chip } from "react-native-paper";
 import { useGlobalStyles } from "@/styles/globalStyles";
 
 interface StepOneFormProps {
   setShippingSite: (site: any) => void;
+  error: string | undefined;
 }
 
-export default function StepOneForm({ setShippingSite }: StepOneFormProps) {
+export default function StepOneForm({
+  setShippingSite,
+  error,
+}: StepOneFormProps) {
   const [headquarters, setHQ] = useState<string>();
   const styles = useGlobalStyles();
 
@@ -41,12 +45,14 @@ export default function StepOneForm({ setShippingSite }: StepOneFormProps) {
       </View>
       <View>
         <Dropdown
+          hideMenuHeader={false}
           label="Sede de origen"
           placeholder="Selecciona una sede"
           options={dropDownItems}
           value={headquarters}
           onSelect={handleSelect}
         />
+        {error && <Text style={{ color: "red", marginTop: 8 }}>{error}</Text>}
       </View>
     </View>
   );
