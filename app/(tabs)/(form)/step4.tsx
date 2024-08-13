@@ -8,8 +8,8 @@ import PreviewCard from "@/app/components/previewCard";
 interface ShipmentProps {
   dateSent: any;
   dateDelivery: any;
-  timeSent?: { start: any; end: any };
-  timeDelivery?: { start: any; end: any };
+  timeSent: any;
+  timeDelivery: any;
   shippingSite: any;
   client: any;
 }
@@ -42,19 +42,16 @@ export default function StepFourForm(props: ShipmentProps) {
         <View>
           <PreviewCard title="Origen" value={props.shippingSite} />
           <PreviewCard title="Cliente" value={props.client} />
-          <PreviewCard title="Fecha de recolección" value={props.dateSent} />
-          {/* <PreviewCard
-            title="Hora de recolección"
-            time={{ start: props.timeSent.start, end: props.timeSent.end }}
-          />
-          <PreviewCard title="Fecha de entrega" value={props.dateDelivery} />
           <PreviewCard
-            title="Hora de entrega"
-            time={{
-              start: props.timeDelivery.start,
-              end: props.timeDelivery.end,
-            }}
-          /> */}
+            title="Fecha de recolección"
+            value={props.dateSent.toString()}
+          />
+          <PreviewCard title="Hora de recolección" value={props.timeSent} />
+          <PreviewCard
+            title="Fecha de entrega"
+            value={props.dateDelivery.toString()}
+          />
+          <PreviewCard title="Hora de entrega" value={props.timeDelivery} />
         </View>
       </View>
     </View>

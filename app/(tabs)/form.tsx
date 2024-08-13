@@ -17,9 +17,9 @@ export default function StepForm() {
   const [timeDelivery, setTimeDelivery] = useState();
 
   const [currentStep, setCurrentStep] = useState(1);
-  const [headquarters, setHQ] = useState<string>();
-  const [stepTwoData, setStepTwoData] = useState<string>();
   const [error, setError] = useState<string>();
+
+  console.log(dateSent, dateDelivery);
 
   const validateStepOne = () => {
     if (!shippingSite) {
@@ -56,7 +56,14 @@ export default function StepForm() {
       case 2:
         return <StepTwoForm setClient={setClient} error={error} />;
       case 3:
-        return <StepThreeForm />;
+        return (
+          <StepThreeForm
+            setTimeDelivery={setTimeDelivery}
+            setTimeSent={setTimeSent}
+            setDateDelivery={setDateDelivery}
+            setDateSent={setDateSent}
+          />
+        );
       case 4:
         return (
           <StepFourForm
@@ -64,6 +71,8 @@ export default function StepForm() {
             shippingSite={shippingSite}
             dateSent={dateSent}
             dateDelivery={dateDelivery}
+            timeDelivery={timeDelivery}
+            timeSent={timeSent}
           />
         );
       default:

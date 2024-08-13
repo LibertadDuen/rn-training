@@ -10,6 +10,7 @@ import { useAppTheme } from "@/app/_layout";
 
 interface DateTimeSelectorProps {
   title: string;
+  setDate: (date: any) => void;
 }
 
 export default function DateSelector(props: DateTimeSelectorProps) {
@@ -18,11 +19,19 @@ export default function DateSelector(props: DateTimeSelectorProps) {
     colors: { ...colors },
   } = useAppTheme();
 
+  const [selectDate, setDate] = React.useState(new Date());
+
+  const handleDate = (e: any) => {
+    setDate(e);
+    props.setDate(selectDate);
+  };
+
   const openAndroidCalendar = () => {
     DateTimePickerAndroid.open({
       mode: "date",
-      value: new Date(),
+      value: selectDate,
       minimumDate: new Date(),
+      onChange: (e: any, date: any) => handleDate(date),
     });
   };
 
@@ -45,9 +54,10 @@ export default function DateSelector(props: DateTimeSelectorProps) {
         <IconButton icon="calendar" onPress={() => openAndroidCalendar()} />
       ) : (
         <DateTimePicker
-          value={new Date()}
+          value={selectDate}
           minimumDate={new Date()}
           mode="date"
+          onChange={(e: any, date: any) => handleDate(date)}
         />
       )}
     </View>

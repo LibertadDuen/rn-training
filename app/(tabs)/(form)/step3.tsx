@@ -6,7 +6,19 @@ import DateSelector from "@/app/components/dateSelector";
 import TimeSelector from "@/app/components/timeSelector";
 import { useGlobalStyles } from "@/styles/globalStyles";
 
-export default function StepThreeForm() {
+interface StepThreeFormProps {
+  setDateSent: (date: any) => void;
+  setDateDelivery: (date: any) => void;
+  setTimeSent: (time: any) => void;
+  setTimeDelivery: (time: any) => void;
+}
+
+export default function StepThreeForm({
+  setDateSent,
+  setDateDelivery,
+  setTimeSent,
+  setTimeDelivery,
+}: StepThreeFormProps) {
   const styles = useGlobalStyles();
 
   return (
@@ -32,10 +44,10 @@ export default function StepThreeForm() {
           </Text>
         </View>
         <View>
-          <DateSelector title="Fecha de recolección" />
-          <TimeSelector title="Hora de recolección" />
-          <DateSelector title="Fecha de entrega" />
-          <TimeSelector title="Hora de recolección" />
+          <DateSelector title="Fecha de recolección" setDate={setDateSent} />
+          <TimeSelector title="Hora de recolección" setTime={setTimeSent} />
+          <DateSelector title="Fecha de entrega" setDate={setDateDelivery} />
+          <TimeSelector title="Hora de recolección" setTime={setTimeDelivery} />
         </View>
       </View>
     </View>

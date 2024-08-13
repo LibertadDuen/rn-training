@@ -7,8 +7,7 @@ import { useAppTheme } from "@/app/_layout";
 
 interface PreviewCardProps {
   title: string;
-  value?: string;
-  time?: { start: string; end: string };
+  value: string;
 }
 
 export default function PreviewCard(props: PreviewCardProps) {
@@ -28,13 +27,7 @@ export default function PreviewCard(props: PreviewCardProps) {
       }}
     >
       <Text style={styles.subtitle}>{props.title}</Text>
-      {props.time ? (
-        <Text style={styles.text}>
-          {props.time.start} a {props.time.end}
-        </Text>
-      ) : (
-        <Text style={styles.text}>{props.value}</Text>
-      )}
+      <Text style={styles.text}>{props.value}</Text>
     </View>
   );
 }
