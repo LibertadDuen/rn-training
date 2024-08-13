@@ -1,13 +1,21 @@
 import React, { useState } from "react";
 import { View } from "react-native";
-import Step1 from "./(form)/step1";
-import Step2 from "./(form)/step2";
-import Step3 from "./(form)/step3";
-import { Button, IconButton } from "react-native-paper";
+import StepOneForm from "./(form)/step1";
+import StepTwoForm from "./(form)/step2";
+import StepThreeForm from "./(form)/step3";
+import StepFourForm from "./(form)/step4";
+import { Button } from "react-native-paper";
 import { useGlobalStyles } from "@/styles/globalStyles";
 
 const StepForm = () => {
   const styles = useGlobalStyles();
+  const [shippingSite, setShippingSite] = useState();
+  const [client, setClient] = useState();
+  const [dateSent, setDateSent] = useState();
+  const [dateDelivery, setDateDelivery] = useState();
+  const [timeSent, setTimeSent] = useState();
+  const [timeDelivery, setTimeDelivery] = useState();
+
   const [currentStep, setCurrentStep] = useState(1);
 
   const nextStep = () => {
@@ -21,13 +29,22 @@ const StepForm = () => {
   const renderStep = () => {
     switch (currentStep) {
       case 1:
-        return <Step1 />;
+        return <StepOneForm setShippingSite={setShippingSite} />;
       case 2:
-        return <Step2 />;
+        return <StepTwoForm setClient={setClient} />;
       case 3:
-        return <Step3 />;
+        return <StepThreeForm />;
+      case 4:
+        return (
+          <StepFourForm
+            client={client}
+            shippingSite={shippingSite}
+            dateSent={dateSent}
+            dateDelivery={dateDelivery}
+          />
+        );
       default:
-        return <Step1 />;
+        return <StepOneForm setShippingSite={setShippingSite} />;
     }
   };
 
@@ -48,7 +65,7 @@ const StepForm = () => {
           marginBottom: 16,
         }}
       >
-        {currentStep < 3 && (
+        {currentStep < 4 && (
           <Button
             mode="contained"
             style={styles.primaryButton}

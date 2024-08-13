@@ -6,13 +6,8 @@ import DateSelector from "@/app/components/dateSelector";
 import TimeSelector from "@/app/components/timeSelector";
 import { useGlobalStyles } from "@/styles/globalStyles";
 
-import { useAppTheme } from "@/app/_layout";
-
 export default function StepThreeForm() {
   const styles = useGlobalStyles();
-  const {
-    colors: { ...colors },
-  } = useAppTheme();
 
   return (
     <View style={styles.screenContainer}>

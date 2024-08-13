@@ -4,9 +4,18 @@ import { View } from "react-native";
 import { Text, RadioButton, Divider, Icon } from "react-native-paper";
 import { useGlobalStyles } from "@/styles/globalStyles";
 
-export default function StepTwoForm() {
+interface StepTwoFormProps {
+  setClient: (client: any) => void;
+}
+
+export default function StepTwoForm({ setClient }: StepTwoFormProps) {
   const styles = useGlobalStyles();
   const [value, setValue] = React.useState("0");
+
+  const handleSelect = (e: any) => {
+    setValue(e);
+    setClient(e);
+  };
 
   return (
     <View style={styles.screenContainer}>
@@ -26,24 +35,21 @@ export default function StepTwoForm() {
         </View>
       </View>
       <View style={{ paddingTop: 12 }}>
-        <RadioButton.Group
-          onValueChange={(newValue) => setValue(newValue)}
-          value={value}
-        >
+        <RadioButton.Group onValueChange={handleSelect} value={value}>
           <View style={styles.radioButton}>
-            <RadioButton value="1" />
+            <RadioButton value="Juan Pérez" />
             <Text style={styles.radioButtonLabel}>Juan Pérez</Text>
           </View>
           <View style={styles.radioButton}>
-            <RadioButton value="2" />
+            <RadioButton value="Roberto Martínez" />
             <Text style={styles.radioButtonLabel}>Roberto Martínez</Text>
           </View>
           <View style={styles.radioButton}>
-            <RadioButton value="3" />
+            <RadioButton value="Alfredo Sánchez" />
             <Text style={styles.radioButtonLabel}>Alfredo Sánchez</Text>
           </View>
           <View style={styles.radioButton}>
-            <RadioButton value="4" />
+            <RadioButton value="Raúl Vega" />
             <Text style={styles.radioButtonLabel}>Raúl Vega</Text>
           </View>
         </RadioButton.Group>

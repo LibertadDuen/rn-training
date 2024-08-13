@@ -5,16 +5,24 @@ import { Dropdown } from "react-native-paper-dropdown";
 import { Text, Divider, Icon } from "react-native-paper";
 import { useGlobalStyles } from "@/styles/globalStyles";
 
-export default function StepOneForm() {
+interface StepOneFormProps {
+  setShippingSite: (site: any) => void;
+}
+
+export default function StepOneForm({ setShippingSite }: StepOneFormProps) {
   const [headquarters, setHQ] = useState<string>();
-  const [value, setValue] = React.useState("first");
   const styles = useGlobalStyles();
 
   const dropDownItems = [
-    { label: "Norte", value: "option1" },
-    { label: "Centro Sur", value: "option2" },
-    { label: "Av. Niños Héroes", value: "option3" },
+    { label: "Norte", value: "Norte" },
+    { label: "Centro Sur", value: "Centro Sur" },
+    { label: "Av. Niños Héroes", value: "Av. Niños Héroes" },
   ];
+
+  const handleSelect = (e: any) => {
+    setHQ(e);
+    setShippingSite(e);
+  };
 
   return (
     <View style={styles.screenContainer}>
@@ -37,7 +45,7 @@ export default function StepOneForm() {
           placeholder="Selecciona una sede"
           options={dropDownItems}
           value={headquarters}
-          onSelect={setHQ}
+          onSelect={handleSelect}
         />
       </View>
     </View>

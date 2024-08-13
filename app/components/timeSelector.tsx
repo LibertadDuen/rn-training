@@ -1,11 +1,8 @@
 import * as React from "react";
 
-import { View, Platform } from "react-native";
-import { Text, IconButton, TextInput } from "react-native-paper";
+import { View } from "react-native";
+import { Text, TextInput } from "react-native-paper";
 import { useGlobalStyles } from "@/styles/globalStyles";
-import DateTimePicker, {
-  DateTimePickerAndroid,
-} from "@react-native-community/datetimepicker";
 import { useAppTheme } from "@/app/_layout";
 
 interface DateTimeSelectorProps {
