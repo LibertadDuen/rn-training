@@ -19,8 +19,6 @@ export default function StepForm() {
   const [currentStep, setCurrentStep] = useState(1);
   const [error, setError] = useState<string>();
 
-  console.log(dateSent, dateDelivery);
-
   const validateStepOne = () => {
     if (!shippingSite) {
       setError("Por favor, selecciona una sede.");

@@ -44,12 +44,20 @@ export default function StepFourForm(props: ShipmentProps) {
           <PreviewCard title="Cliente" value={props.client} />
           <PreviewCard
             title="Fecha de recolección"
-            value={props.dateSent.toString()}
+            value={props.dateSent.toLocaleDateString("es-MX", {
+              year: "numeric",
+              month: "long",
+              day: "2-digit",
+            })}
           />
           <PreviewCard title="Hora de recolección" value={props.timeSent} />
           <PreviewCard
             title="Fecha de entrega"
-            value={props.dateDelivery.toString()}
+            value={props.dateDelivery.toLocaleDateString("es-MX", {
+              year: "numeric",
+              month: "long",
+              day: "2-digit",
+            })}
           />
           <PreviewCard title="Hora de entrega" value={props.timeDelivery} />
         </View>

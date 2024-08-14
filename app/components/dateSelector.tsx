@@ -21,8 +21,14 @@ export default function DateSelector(props: DateTimeSelectorProps) {
 
   const [selectDate, setDate] = React.useState(new Date());
 
-  const handleDate = (e: any) => {
+  const handleIOSDate = (e: any) => {
     setDate(e);
+    props.setDate(selectDate);
+  };
+
+  const onChange = (e: any, date: any) => {
+    const currentDate = date || selectDate;
+    setDate(currentDate);
     props.setDate(selectDate);
   };
 
@@ -31,7 +37,7 @@ export default function DateSelector(props: DateTimeSelectorProps) {
       mode: "date",
       value: selectDate,
       minimumDate: new Date(),
-      onChange: (e: any, date: any) => handleDate(date),
+      onChange,
     });
   };
 
@@ -41,25 +47,37 @@ export default function DateSelector(props: DateTimeSelectorProps) {
         borderColor: colors.brandSecondaryDark2,
         borderRadius: 10,
         borderWidth: 1,
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
         paddingHorizontal: 16,
         paddingVertical: 12,
         marginBottom: 8,
       }}
     >
-      <Text style={styles.subtitle}>{props.title}</Text>
-      {Platform.OS === "android" ? (
-        <IconButton icon="calendar" onPress={() => openAndroidCalendar()} />
-      ) : (
-        <DateTimePicker
-          value={selectDate}
-          minimumDate={new Date()}
-          mode="date"
-          onChange={(e: any, date: any) => handleDate(date)}
-        />
-      )}
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <Text style={styles.subtitle}>{props.title}</Text>
+        {Platform.OS === "android" ? (
+          <IconButton icon="calendar" onPress={() => openAndroidCalendar()} />
+        ) : (
+          <DateTimePicker
+            value={selectDate}
+            minimumDate={new Date()}
+            mode="date"
+            onChange={(e: any, date: any) => handleIOSDate(date)}
+          />
+        )}
+      </View>
+      <Text style={styles.text}>
+        {selectDate.toLocaleDateString("es-MX", {
+          year: "numeric",
+          month: "long",
+          day: "2-digit",
+        })}
+      </Text>
     </View>
   );
 }
