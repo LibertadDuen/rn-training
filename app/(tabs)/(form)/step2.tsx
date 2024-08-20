@@ -1,11 +1,14 @@
+import axios from "axios";
 import * as React from "react";
 import { View } from "react-native";
-import { Text, RadioButton, Divider, Icon } from "react-native-paper";
 import { useGlobalStyles } from "@/styles/globalStyles";
+import { Text, RadioButton, Divider, Icon } from "react-native-paper";
 
 interface Client {
+  _id: string;
   name: string;
-  companyName: string;
+  company: string;
+  companyName?: string;
   address: string;
   postalCode: number;
   city: string;
@@ -25,22 +28,56 @@ export default function StepTwoForm({
   error,
 }: StepTwoFormProps) {
   const styles = useGlobalStyles();
-  const [value, setValue] = React.useState("0");
+  const [value, setValue] = React.useState({
+    _id: "",
+    name: "",
+    company: "",
+    companyName: "",
+    address: "",
+    postalCode: 0,
+    city: "",
+    state: "",
+    email: "",
+    phone: "",
+  } as Client);
+  const [clients, setClients] = React.useState([
+    {
+      label: "",
+      value: "",
+      info: {} as Client,
+    },
+  ]);
+  const maxClients = 6;
+
+  const getClients = async () => {
+    await axios
+      .get("http://localhost:3000/clients")
+      .then((response) => {
+        const clients = response.data.map((client: Client) => ({
+          label: client.name,
+          value: client._id,
+          info: { ...client, companyName: client.company },
+        }));
+        setClients(clients);
+      })
+      .catch((error) => {
+        console.error("Error fetching sites:", error);
+      });
+  };
 
   const handleSelect = (e: any) => {
     setValue(e);
-    const client = {
-      name: e,
-      companyName: "TESA",
-      address: "Kansas 3000",
-      postalCode: 33000,
-      city: "Chihuahua",
-      state: "Chihuahua",
-      email: "sergioisilvam97@gmail.com",
-      phone: "6391308875",
-    } as Client;
-    setClient(client);
+    const clientToUpdate = clients.find((client) => client.value === e);
+
+    if (clientToUpdate) {
+      const clientInfo = clientToUpdate.info as Client;
+      setClient(clientInfo);
+    }
   };
+
+  React.useEffect(() => {
+    getClients();
+  }, []);
 
   return (
     <View style={styles.screenContainer}>
@@ -62,24 +99,16 @@ export default function StepTwoForm({
       <View style={{ paddingTop: 12 }}>
         <RadioButton.Group
           onValueChange={handleSelect}
-          value={client ? client.name : value}
+          value={client ? client._id : value._id}
         >
-          <View style={styles.radioButton}>
-            <RadioButton value="Juan Pérez" />
-            <Text style={styles.radioButtonLabel}>Juan Pérez</Text>
-          </View>
-          <View style={styles.radioButton}>
-            <RadioButton value="Roberto Martínez" />
-            <Text style={styles.radioButtonLabel}>Roberto Martínez</Text>
-          </View>
-          <View style={styles.radioButton}>
-            <RadioButton value="Alfredo Sánchez" />
-            <Text style={styles.radioButtonLabel}>Alfredo Sánchez</Text>
-          </View>
-          <View style={styles.radioButton}>
-            <RadioButton value="Raúl Vega" />
-            <Text style={styles.radioButtonLabel}>Raúl Vega</Text>
-          </View>
+          {clients.slice(0, maxClients).map((client) => (
+            <View key={client.info._id} style={styles.radioButton}>
+              <RadioButton value={client.info._id} />
+              <Text style={styles.radioButtonLabel}>
+                {client.info.name}, {client.info.company}
+              </Text>
+            </View>
+          ))}
         </RadioButton.Group>
         {error && <Text style={{ color: "red", marginTop: 8 }}>{error}</Text>}
       </View>

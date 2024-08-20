@@ -10,6 +10,7 @@ import { useGlobalStyles } from "@/styles/globalStyles";
 import axios from "axios";
 
 interface ShippingSite {
+  _id: string;
   contactName: string;
   companyName: string;
   siteName: string;
@@ -19,8 +20,10 @@ interface ShippingSite {
   state: string;
 }
 interface Client {
+  _id: string;
   name: string;
-  companyName: string;
+  company: string;
+  companyName?: string;
   address: string;
   postalCode: number;
   city: string;
@@ -91,7 +94,7 @@ export default function StepForm() {
         );
       case 2:
         return (
-          <StepTwoForm setClient={setClient} client={client} error={error} />
+          <StepTwoForm setClient={setClient} client={client!} error={error} />
         );
       case 3:
         return <StepThreeForm setProducts={setProducts} products={products} />;
@@ -141,8 +144,25 @@ export default function StepForm() {
         "ericknintendo@hotmail.com",
       ],
       updateRequested: false,
-      shippingSite: shippingSite,
-      client: client,
+      shippingSite: {
+        contactName: shippingSite?.contactName,
+        companyName: shippingSite?.companyName,
+        siteName: shippingSite?.siteName,
+        address: shippingSite?.address,
+        postalCode: shippingSite?.postalCode,
+        city: shippingSite?.city,
+        state: shippingSite?.state,
+      },
+      client: {
+        name: client?.name,
+        companyName: client?.companyName,
+        address: client?.address,
+        postalCode: client?.postalCode,
+        city: client?.city,
+        state: client?.state,
+        email: client?.email,
+        phone: client?.phone,
+      },
       bulk: [],
       tripFinalized: false,
       evidences: [],

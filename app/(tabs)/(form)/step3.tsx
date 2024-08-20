@@ -45,8 +45,8 @@ export default function StepThreeForm({
     colors: { ...colors },
   } = useAppTheme();
 
-  const getProducts = () => {
-    axios
+  const getProducts = async () => {
+    await axios
       .get("http://localhost:3000/products/active")
       .then((response) => {
         const products = response.data.products.map((product: Product) => ({
@@ -128,7 +128,7 @@ export default function StepThreeForm({
             style={{ backgroundColor: "#f2f2f2", width: "45%" }}
             placeholder="Cantidad"
             onChangeText={handleQuantity}
-            value={quantity}
+            value={products ? products.quantity.toString() : quantity}
             keyboardType="numeric"
           />
         </View>

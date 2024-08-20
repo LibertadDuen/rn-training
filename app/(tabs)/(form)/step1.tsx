@@ -1,10 +1,12 @@
-import React, { useState } from "react";
-
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { View } from "react-native";
 import { Dropdown } from "react-native-paper-dropdown";
-import { Text, Divider, Icon, Button, Chip } from "react-native-paper";
 import { useGlobalStyles } from "@/styles/globalStyles";
+import { Text, Divider, Icon } from "react-native-paper";
+
 interface ShippingSite {
+  _id: string;
   contactName: string;
   companyName: string;
   siteName: string;
@@ -24,28 +26,53 @@ export default function StepOneForm({
   setShippingSite,
   error,
 }: StepOneFormProps) {
-  const [headquarters, setHQ] = useState<string>();
   const styles = useGlobalStyles();
+  const [sites, setSites] = useState([
+    {
+      label: "",
+      value: "",
+      info: {} as ShippingSite,
+    },
+  ]);
+  const [selectedSite, setSelectedSite] = useState();
 
-  const dropDownItems = [
-    { label: "Norte", value: "Norte" },
-    { label: "Centro Sur", value: "Centro Sur" },
-    { label: "Av. Niños Héroes", value: "Av. Niños Héroes" },
-  ];
+  const getSites = () => {
+    axios
+      .get("http://localhost:3000/sites")
+      .then((response) => {
+        const sites = response.data.map((site: ShippingSite) => ({
+          label: site.siteName,
+          value: site._id,
+          info: site,
+        }));
+        setSites(sites);
+      })
+      .catch((error) => {
+        console.error("Error fetching sites:", error);
+      });
+  };
 
   const handleSelect = (e: any) => {
-    setHQ(e);
-    const site = {
-      contactName: "Erick Silva",
-      companyName: e,
-      siteName: "Chihuahua norte",
-      address: "Kansas 2000",
-      postalCode: 33000,
-      city: "Chihuahua",
-      state: "Chihuahua",
-    } as ShippingSite;
-    setShippingSite(site);
+    setSelectedSite(e);
+    const siteToUpdate = sites.find((site) => site.value === e);
+    if (siteToUpdate) {
+      const siteInfo = siteToUpdate.info as ShippingSite;
+      setShippingSite({
+        _id: siteInfo._id,
+        contactName: siteInfo.contactName,
+        companyName: siteInfo.companyName,
+        siteName: siteInfo.siteName,
+        address: siteInfo.address,
+        postalCode: siteInfo.postalCode,
+        city: siteInfo.city,
+        state: siteInfo.state,
+      });
+    }
   };
+
+  useEffect(() => {
+    getSites();
+  }, []);
 
   return (
     <View style={styles.screenContainer}>
@@ -67,8 +94,8 @@ export default function StepOneForm({
           hideMenuHeader={false}
           label="Sede de origen"
           placeholder="Selecciona una sede"
-          options={dropDownItems}
-          value={shippingSite ? shippingSite.companyName : headquarters}
+          options={sites}
+          value={shippingSite ? shippingSite._id : selectedSite}
           onSelect={handleSelect}
         />
         {error && <Text style={{ color: "red", marginTop: 8 }}>{error}</Text>}
