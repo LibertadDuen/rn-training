@@ -14,11 +14,13 @@ interface ShippingSite {
   state: string;
 }
 interface StepOneFormProps {
+  shippingSite?: ShippingSite;
   setShippingSite: (site: ShippingSite) => void;
   error: string | undefined;
 }
 
 export default function StepOneForm({
+  shippingSite,
   setShippingSite,
   error,
 }: StepOneFormProps) {
@@ -66,7 +68,7 @@ export default function StepOneForm({
           label="Sede de origen"
           placeholder="Selecciona una sede"
           options={dropDownItems}
-          value={headquarters}
+          value={shippingSite ? shippingSite.companyName : headquarters}
           onSelect={handleSelect}
         />
         {error && <Text style={{ color: "red", marginTop: 8 }}>{error}</Text>}

@@ -14,11 +14,16 @@ interface Client {
   phone: string;
 }
 interface StepTwoFormProps {
+  client?: Client;
   setClient: (client: Client) => void;
   error: string | undefined;
 }
 
-export default function StepTwoForm({ setClient, error }: StepTwoFormProps) {
+export default function StepTwoForm({
+  client,
+  setClient,
+  error,
+}: StepTwoFormProps) {
   const styles = useGlobalStyles();
   const [value, setValue] = React.useState("0");
 
@@ -55,7 +60,10 @@ export default function StepTwoForm({ setClient, error }: StepTwoFormProps) {
         </View>
       </View>
       <View style={{ paddingTop: 12 }}>
-        <RadioButton.Group onValueChange={handleSelect} value={value}>
+        <RadioButton.Group
+          onValueChange={handleSelect}
+          value={client ? client.name : value}
+        >
           <View style={styles.radioButton}>
             <RadioButton value="Juan Pérez" />
             <Text style={styles.radioButtonLabel}>Juan Pérez</Text>

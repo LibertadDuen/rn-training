@@ -82,11 +82,19 @@ export default function StepForm() {
   const renderStep = () => {
     switch (currentStep) {
       case 1:
-        return <StepOneForm setShippingSite={setShippingSite} error={error} />;
+        return (
+          <StepOneForm
+            setShippingSite={setShippingSite}
+            shippingSite={shippingSite!}
+            error={error}
+          />
+        );
       case 2:
-        return <StepTwoForm setClient={setClient} error={error} />;
+        return (
+          <StepTwoForm setClient={setClient} client={client} error={error} />
+        );
       case 3:
-        return <StepThreeForm setProducts={setProducts} />;
+        return <StepThreeForm setProducts={setProducts} products={products} />;
       case 4:
         return (
           <StepFourForm
@@ -109,7 +117,13 @@ export default function StepForm() {
           />
         );
       default:
-        return <StepOneForm setShippingSite={setShippingSite} error={error} />;
+        return (
+          <StepOneForm
+            setShippingSite={setShippingSite}
+            shippingSite={shippingSite!}
+            error={error}
+          />
+        );
     }
   };
 

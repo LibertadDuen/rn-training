@@ -43,7 +43,11 @@ export default function StepFiveForm(props: ShipmentProps) {
         <View>
           <PreviewCard title="Origen" value={props.shippingSite.siteName} />
           <PreviewCard title="Cliente" value={props.client.name} />
-          <PreviewCard title="Producto" value={props.products.name} />
+          <PreviewCard
+            title="Producto"
+            value={props.products.name}
+            quantity={props.products.quantity}
+          />
           <PreviewCard
             title="Fecha de recolección"
             value={props.dateSent.toLocaleDateString("es-MX", {

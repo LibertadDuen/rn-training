@@ -17,10 +17,14 @@ interface Product {
   idProduct?: string;
 }
 interface StepThreeFormProps {
+  products?: Product;
   setProducts: (product: Product) => void;
 }
 
-export default function StepThreeForm({ setProducts }: StepThreeFormProps) {
+export default function StepThreeForm({
+  setProducts,
+  products,
+}: StepThreeFormProps) {
   const [product, setProduct] = useState();
   const [items, setItems] = useState([
     {
@@ -67,10 +71,11 @@ export default function StepThreeForm({ setProducts }: StepThreeFormProps) {
     if (productToUpdate) {
       const productInfo = productToUpdate.info as Product;
       setProducts({
+        _id: productInfo._id,
         description: productInfo.description,
         name: productInfo.name,
         unit: productInfo.unit,
-        idProduct: productInfo._id,
+        idProduct: productInfo.idProduct,
         sku: productInfo.sku,
         vendor: productInfo.vendor,
         quantity: parseInt(quantity),
@@ -99,10 +104,10 @@ export default function StepThreeForm({ setProducts }: StepThreeFormProps) {
       </View>
       <View>
         <View style={{ flexDirection: "row", gap: 8 }}>
-          <Icon source="office-building" size={24} color="black" />
-          <Text style={styles.subtitle}>Origen</Text>
+          <Icon source="archive" size={24} color="black" />
+          <Text style={styles.subtitle}>Producto</Text>
         </View>
-        <Text style={styles.text}>Selecciona los productos a enviar.</Text>
+        <Text style={styles.text}>Selecciona el producto a enviar.</Text>
       </View>
       <View style={{ flexDirection: "row" }}>
         <View style={{ width: 270, marginRight: 10 }}>
@@ -111,7 +116,7 @@ export default function StepThreeForm({ setProducts }: StepThreeFormProps) {
             label="Producto"
             placeholder="Selecciona un producto"
             options={items}
-            value={product}
+            value={products ? products._id : product}
             onSelect={handleSelect}
           />
         </View>

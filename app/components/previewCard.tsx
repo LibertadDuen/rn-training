@@ -8,6 +8,7 @@ import { useAppTheme } from "@/app/_layout";
 interface PreviewCardProps {
   title: string;
   value: string;
+  quantity?: number;
 }
 
 export default function PreviewCard(props: PreviewCardProps) {
@@ -27,7 +28,12 @@ export default function PreviewCard(props: PreviewCardProps) {
       }}
     >
       <Text style={styles.subtitle}>{props.title}</Text>
-      <Text style={styles.text}>{props.value}</Text>
+      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+        <Text style={styles.text}>{props.value}</Text>
+        {props.quantity && (
+          <Text style={styles.text}>Cantidad: {props.quantity}</Text>
+        )}
+      </View>
     </View>
   );
 }
