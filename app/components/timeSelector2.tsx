@@ -10,27 +10,33 @@ import { useAppTheme } from "@/app/_layout";
 
 interface DateTimeSelectorProps {
   title: string;
-  setDate: (date: any) => void;
+  setTime: (date: any) => void;
 }
 
-export default function DateSelector(props: DateTimeSelectorProps) {
+export default function TimeSelector(props: DateTimeSelectorProps) {
   const styles = useGlobalStyles();
   const {
     colors: { ...colors },
   } = useAppTheme();
 
-  const [selectDate, setDate] = React.useState(new Date());
+  const [selectTime, setTime] = React.useState(new Date());
 
-  const onChange = (e: any, date: any) => {
-    setDate(date);
-    props.setDate(date);
+  const onChange = (e: any, time: any) => {
+    setTime(time);
+    props.setTime(
+      time.toLocaleTimeString("es-MX", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      })
+    );
   };
 
   const openAndroidCalendar = () => {
     DateTimePickerAndroid.open({
-      mode: "date",
-      value: selectDate,
-      minimumDate: new Date(),
+      mode: "time",
+      is24Hour: true,
+      value: selectTime,
       onChange,
     });
   };
@@ -55,21 +61,24 @@ export default function DateSelector(props: DateTimeSelectorProps) {
       >
         <Text style={styles.subtitle}>{props.title}</Text>
         {Platform.OS === "android" ? (
-          <IconButton icon="calendar" onPress={() => openAndroidCalendar()} />
+          <IconButton
+            icon="clock-outline"
+            onPress={() => openAndroidCalendar()}
+          />
         ) : (
           <DateTimePicker
-            value={selectDate}
-            minimumDate={new Date()}
-            mode="date"
-            onChange={(e: any, date: any) => onChange(e, date)}
+            value={selectTime}
+            is24Hour={true}
+            mode="time"
+            onChange={(e: any, time: any) => onChange(e, time)}
           />
         )}
       </View>
       <Text style={styles.text}>
-        {selectDate.toLocaleDateString("es-MX", {
-          year: "numeric",
-          month: "long",
-          day: "2-digit",
+        {selectTime.toLocaleTimeString("es-MX", {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false,
         })}
       </Text>
     </View>

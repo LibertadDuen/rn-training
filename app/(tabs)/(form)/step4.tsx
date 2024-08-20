@@ -2,19 +2,23 @@ import * as React from "react";
 
 import { View } from "react-native";
 import { Text, Divider, Icon } from "react-native-paper";
+import DateSelector from "@/app/components/dateSelector";
+import TimeSelector2 from "@/app/components/timeSelector2";
 import { useGlobalStyles } from "@/styles/globalStyles";
-import PreviewCard from "@/app/components/previewCard";
 
-interface ShipmentProps {
-  dateSent: any;
-  dateDelivery: any;
-  timeSent: any;
-  timeDelivery: any;
-  shippingSite: any;
-  client: any;
+interface StepThreeFormProps {
+  setDateSent: (date: any) => void;
+  setDateDelivery: (date: any) => void;
+  setTimeSent: (time: any) => void;
+  setTimeDelivery: (time: any) => void;
 }
 
-export default function StepFourForm(props: ShipmentProps) {
+export default function StepFourForm({
+  setDateSent,
+  setDateDelivery,
+  setTimeSent,
+  setTimeDelivery,
+}: StepThreeFormProps) {
   const styles = useGlobalStyles();
 
   return (
@@ -32,34 +36,18 @@ export default function StepFourForm(props: ShipmentProps) {
               marginBottom: 8,
             }}
           >
-            <Icon source="pencil-circle" size={24} />
-            <Text style={styles.subtitle}>Confirma</Text>
+            <Icon source="calendar-heart" size={24} />
+            <Text style={styles.subtitle}>Fecha</Text>
           </View>
           <Text style={styles.text}>
-            Revisa la información del envío, y regístrarlo de ser correcta.{" "}
+            Selecciona la fecha y hora de recolección y entrega.
           </Text>
         </View>
         <View>
-          <PreviewCard title="Origen" value={props.shippingSite} />
-          <PreviewCard title="Cliente" value={props.client} />
-          <PreviewCard
-            title="Fecha de recolección"
-            value={props.dateSent.toLocaleDateString("es-MX", {
-              year: "numeric",
-              month: "long",
-              day: "2-digit",
-            })}
-          />
-          <PreviewCard title="Hora de recolección" value={props.timeSent} />
-          <PreviewCard
-            title="Fecha de entrega"
-            value={props.dateDelivery.toLocaleDateString("es-MX", {
-              year: "numeric",
-              month: "long",
-              day: "2-digit",
-            })}
-          />
-          <PreviewCard title="Hora de entrega" value={props.timeDelivery} />
+          <DateSelector title="Fecha de recolección" setDate={setDateSent} />
+          <TimeSelector2 title="Hora de recolección" setTime={setTimeSent} />
+          <DateSelector title="Fecha de entrega" setDate={setDateDelivery} />
+          <TimeSelector2 title="Hora de entrega" setTime={setTimeDelivery} />
         </View>
       </View>
     </View>

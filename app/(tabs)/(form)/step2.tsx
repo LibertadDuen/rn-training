@@ -3,8 +3,18 @@ import { View } from "react-native";
 import { Text, RadioButton, Divider, Icon } from "react-native-paper";
 import { useGlobalStyles } from "@/styles/globalStyles";
 
+interface Client {
+  name: string;
+  companyName: string;
+  address: string;
+  postalCode: number;
+  city: string;
+  state: string;
+  email: string;
+  phone: string;
+}
 interface StepTwoFormProps {
-  setClient: (client: any) => void;
+  setClient: (client: Client) => void;
   error: string | undefined;
 }
 
@@ -14,7 +24,17 @@ export default function StepTwoForm({ setClient, error }: StepTwoFormProps) {
 
   const handleSelect = (e: any) => {
     setValue(e);
-    setClient(e);
+    const client = {
+      name: e,
+      companyName: "TESA",
+      address: "Kansas 3000",
+      postalCode: 33000,
+      city: "Chihuahua",
+      state: "Chihuahua",
+      email: "sergioisilvam97@gmail.com",
+      phone: "6391308875",
+    } as Client;
+    setClient(client);
   };
 
   return (

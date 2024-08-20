@@ -1,53 +1,97 @@
-import * as React from "react";
+import React, { useState } from "react";
 
 import { View } from "react-native";
-import { Text, Divider, Icon } from "react-native-paper";
-import DateSelector from "@/app/components/dateSelector";
-import TimeSelector from "@/app/components/timeSelector";
+import { Dropdown } from "react-native-paper-dropdown";
+import { Text, Divider, Icon, TextInput } from "react-native-paper";
 import { useGlobalStyles } from "@/styles/globalStyles";
-
+import { useAppTheme } from "@/app/_layout";
+import axios from "axios";
+interface Product {
+  _id?: string;
+  quantity: number;
+  name: string;
+  description?: string;
+  unit: string;
+  vendor?: string;
+  sku?: string;
+  idProduct?: string;
+}
 interface StepThreeFormProps {
-  setDateSent: (date: any) => void;
-  setDateDelivery: (date: any) => void;
-  setTimeSent: (time: any) => void;
-  setTimeDelivery: (time: any) => void;
+  setProducts: (product: Product) => void;
 }
 
-export default function StepThreeForm({
-  setDateSent,
-  setDateDelivery,
-  setTimeSent,
-  setTimeDelivery,
-}: StepThreeFormProps) {
+export default function StepThreeForm({ setProducts }: StepThreeFormProps) {
+  const [product, setProduct] = useState();
+  const [items, setItems] = useState([]);
+  const [quantity, setQuantity] = useState("");
   const styles = useGlobalStyles();
+
+  const {
+    colors: { ...colors },
+  } = useAppTheme();
+
+  const getProducts = () => {
+    axios
+      .get("http://localhost:3000/products/active")
+      .then((response) => {
+        const products = response.data.products.map((product: Product) => ({
+          label: product.name,
+          value: product._id,
+        }));
+        setItems(products);
+      })
+      .catch((error) => {
+        console.error("Error fetching products:", error);
+      });
+  };
+
+  React.useEffect(() => {
+    getProducts();
+  }, []);
+
+  const handleSelect = (e: any) => {
+    setProduct(e);
+  };
+
+  const handleQuantity = (e: any) => {
+    setQuantity(e);
+  };
 
   return (
     <View style={styles.screenContainer}>
       <View>
-        <View>
-          <Text style={styles.title}>Programa un nuevo envío</Text>
-          <Divider style={styles.divider} />
+        <Text style={styles.title}>Programa un nuevo envío</Text>
+        <Divider style={styles.divider} />
+      </View>
+      <View>
+        <View style={{ flexDirection: "row", gap: 8 }}>
+          <Icon source="office-building" size={24} color="black" />
+          <Text style={styles.subtitle}>Origen</Text>
         </View>
-        <View>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              marginBottom: 8,
-            }}
-          >
-            <Icon source="calendar-heart" size={24} />
-            <Text style={styles.subtitle}>Fecha</Text>
-          </View>
-          <Text style={styles.text}>
-            Selecciona la fecha y hora de recolección y entrega.
-          </Text>
+        <Text style={styles.text}>Selecciona los productos a enviar.</Text>
+      </View>
+      <View style={{ flexDirection: "row" }}>
+        <View style={{ width: 270, marginRight: 10 }}>
+          <Dropdown
+            hideMenuHeader={false}
+            label="Producto"
+            placeholder="Selecciona un producto"
+            options={items}
+            value={product}
+            onSelect={handleSelect}
+          />
         </View>
-        <View>
-          <DateSelector title="Fecha de recolección" setDate={setDateSent} />
-          <TimeSelector title="Hora de recolección" setTime={setTimeSent} />
-          <DateSelector title="Fecha de entrega" setDate={setDateDelivery} />
-          <TimeSelector title="Hora de recolección" setTime={setTimeDelivery} />
+        <View style={{ width: 250 }}>
+          <TextInput
+            mode="outlined"
+            outlineColor={colors.brandSecondaryDark2}
+            outlineStyle={{ borderRadius: 10 }}
+            style={{ backgroundColor: "#f2f2f2", width: "45%" }}
+            placeholder="Cantidad"
+            onChangeText={handleQuantity}
+            value={quantity}
+            keyboardType="numeric"
+          />
         </View>
       </View>
     </View>

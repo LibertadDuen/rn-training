@@ -4,15 +4,48 @@ import StepOneForm from "./(form)/step1";
 import StepTwoForm from "./(form)/step2";
 import StepThreeForm from "./(form)/step3";
 import StepFourForm from "./(form)/step4";
+import StepFiveForm from "./(form)/step5";
 import { Button } from "react-native-paper";
 import { useGlobalStyles } from "@/styles/globalStyles";
+import axios from "axios";
+
+interface ShippingSite {
+  contactName: string;
+  companyName: string;
+  siteName: string;
+  address: string;
+  postalCode: number;
+  city: string;
+  state: string;
+}
+interface Client {
+  name: string;
+  companyName: string;
+  address: string;
+  postalCode: number;
+  city: string;
+  state: string;
+  email: string;
+  phone: string;
+}
+
+interface Product {
+  quantity: number;
+  name: string;
+  description?: string;
+  unit: string;
+  vendor?: string;
+  sku?: string;
+  idProduct?: string;
+}
 
 export default function StepForm() {
   const styles = useGlobalStyles();
-  const [shippingSite, setShippingSite] = useState();
-  const [client, setClient] = useState();
-  const [dateSent, setDateSent] = useState();
-  const [dateDelivery, setDateDelivery] = useState();
+  const [shippingSite, setShippingSite] = useState<ShippingSite>();
+  const [client, setClient] = useState<Client>();
+  const [products, setProducts] = useState<Product>();
+  const [dateSent, setDateSent] = useState(new Date());
+  const [dateDelivery, setDateDelivery] = useState(new Date());
   const [timeSent, setTimeSent] = useState();
   const [timeDelivery, setTimeDelivery] = useState();
 
@@ -54,17 +87,19 @@ export default function StepForm() {
       case 2:
         return <StepTwoForm setClient={setClient} error={error} />;
       case 3:
+        return <StepThreeForm setProducts={setProducts} />;
+      case 4:
         return (
-          <StepThreeForm
+          <StepFourForm
             setTimeDelivery={setTimeDelivery}
             setTimeSent={setTimeSent}
             setDateDelivery={setDateDelivery}
             setDateSent={setDateSent}
           />
         );
-      case 4:
+      case 5:
         return (
-          <StepFourForm
+          <StepFiveForm
             client={client}
             shippingSite={shippingSite}
             dateSent={dateSent}
@@ -76,6 +111,55 @@ export default function StepForm() {
       default:
         return <StepOneForm setShippingSite={setShippingSite} error={error} />;
     }
+  };
+
+  const onSubmit = () => {
+    const shipment = {
+      creatorId: "6601d2991a4596bffe6ac18a",
+      dateSent: dateSent.toISOString(),
+      timeSent: timeSent,
+      dateDelivery: dateDelivery.toISOString(),
+      timeDelivery: timeDelivery,
+      status: "scheduled",
+      clientEmails: [
+        "erick.silva@ilumps.com",
+        "ericknintendo@gmail.com",
+        "ericknintendo@hotmail.com",
+      ],
+      updateRequested: false,
+      shippingSite: shippingSite,
+      client: client,
+      bulk: [
+        {
+          quantity: 1,
+          unitWeight: 10,
+          length: 15,
+          width: 14,
+          height: 13,
+          description: "Prueba de descripción",
+        },
+        {
+          quantity: 2,
+          unitWeight: 10,
+          length: 15,
+          width: 14,
+          height: 13,
+          description: "Prueba de descripción con 2 bulks",
+        },
+      ],
+      tripFinalized: false,
+      evidences: [],
+      product: [],
+    };
+
+    axios
+      .post("http://localhost:3000/shipments/create", shipment)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("Error sending data: ", error);
+      });
   };
 
   return (
@@ -103,6 +187,16 @@ export default function StepForm() {
             onPress={nextStep}
           >
             Continuar
+          </Button>
+        )}
+        {currentStep === 4 && (
+          <Button
+            mode="contained"
+            style={styles.primaryButton}
+            labelStyle={styles.primaryButtonLabel}
+            onPress={onSubmit}
+          >
+            Registrar
           </Button>
         )}
         {currentStep > 1 && (

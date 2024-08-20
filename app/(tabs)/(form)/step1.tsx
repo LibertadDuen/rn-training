@@ -4,9 +4,17 @@ import { View } from "react-native";
 import { Dropdown } from "react-native-paper-dropdown";
 import { Text, Divider, Icon, Button, Chip } from "react-native-paper";
 import { useGlobalStyles } from "@/styles/globalStyles";
-
+interface ShippingSite {
+  contactName: string;
+  companyName: string;
+  siteName: string;
+  address: string;
+  postalCode: number;
+  city: string;
+  state: string;
+}
 interface StepOneFormProps {
-  setShippingSite: (site: any) => void;
+  setShippingSite: (site: ShippingSite) => void;
   error: string | undefined;
 }
 
@@ -25,7 +33,16 @@ export default function StepOneForm({
 
   const handleSelect = (e: any) => {
     setHQ(e);
-    setShippingSite(e);
+    const site = {
+      contactName: "Erick Silva",
+      companyName: e,
+      siteName: "Chihuahua norte",
+      address: "Kansas 2000",
+      postalCode: 33000,
+      city: "Chihuahua",
+      state: "Chihuahua",
+    } as ShippingSite;
+    setShippingSite(site);
   };
 
   return (
