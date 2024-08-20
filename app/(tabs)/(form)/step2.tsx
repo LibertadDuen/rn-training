@@ -1,11 +1,19 @@
+import axios from "axios";
 import * as React from "react";
 import { View } from "react-native";
-import { Text, RadioButton, Divider, Icon } from "react-native-paper";
 import { useGlobalStyles } from "@/styles/globalStyles";
+import { Text, RadioButton, Divider, Icon } from "react-native-paper";
 
 interface StepTwoFormProps {
   setClient: (client: any) => void;
   error: string | undefined;
+}
+
+interface Client {
+  _id: string;
+  name: string;
+  email: string;
+  phone: string;
 }
 
 export default function StepTwoForm({ setClient, error }: StepTwoFormProps) {

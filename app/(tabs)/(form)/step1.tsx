@@ -1,32 +1,59 @@
-import React, { useState } from "react";
-
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { View } from "react-native";
 import { Dropdown } from "react-native-paper-dropdown";
-import { Text, Divider, Icon, Button, Chip } from "react-native-paper";
 import { useGlobalStyles } from "@/styles/globalStyles";
+import { Text, Divider, Icon } from "react-native-paper";
 
 interface StepOneFormProps {
   setShippingSite: (site: any) => void;
   error: string | undefined;
 }
 
+interface Site {
+  _id: string;
+  siteName: string;
+  address: string;
+  postalCode: number;
+  city: string;
+  state: string;
+}
+
 export default function StepOneForm({
   setShippingSite,
   error,
 }: StepOneFormProps) {
-  const [headquarters, setHQ] = useState<string>();
+  const [sites, setSites] = useState<Site[]>([]);
   const styles = useGlobalStyles();
+  const [selectedSite, setSelectedSite] = useState<string | null>(null);
 
-  const dropDownItems = [
-    { label: "Norte", value: "Norte" },
-    { label: "Centro Sur", value: "Centro Sur" },
-    { label: "Av. Niños Héroes", value: "Av. Niños Héroes" },
-  ];
+  const loadSites = async () => {
+    try {
+      const { data } = await axios.get(
+        "https://oxbi-api-qa.onrender.com/sites"
+      );
+      return data;
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
+  };
 
   const handleSelect = (e: any) => {
-    setHQ(e);
     setShippingSite(e);
+    setSelectedSite(e);
   };
+
+  useEffect(() => {
+    loadSites().then((sites: Site[]) => {
+      setSites(sites || []);
+    });
+  }, []);
+
+  const dropDownItems = sites.map((site) => ({
+    label: `${site.siteName}, ${site.city}, ${site.state}`,
+    value: site._id.toString(),
+  }));
 
   return (
     <View style={styles.screenContainer}>
@@ -49,8 +76,8 @@ export default function StepOneForm({
           label="Sede de origen"
           placeholder="Selecciona una sede"
           options={dropDownItems}
-          value={headquarters}
           onSelect={handleSelect}
+          value={selectedSite ?? undefined}
         />
         {error && <Text style={{ color: "red", marginTop: 8 }}>{error}</Text>}
       </View>
