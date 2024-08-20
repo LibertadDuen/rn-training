@@ -13,8 +13,6 @@ interface StepOneFormProps {
 interface Site {
   _id: string;
   siteName: string;
-  address: string;
-  postalCode: number;
   city: string;
   state: string;
 }
@@ -23,8 +21,8 @@ export default function StepOneForm({
   setShippingSite,
   error,
 }: StepOneFormProps) {
-  const [sites, setSites] = useState<Site[]>([]);
   const styles = useGlobalStyles();
+  const [sites, setSites] = useState<Site[]>([]);
   const [selectedSite, setSelectedSite] = useState<string | null>(null);
 
   const loadSites = async () => {
@@ -32,10 +30,9 @@ export default function StepOneForm({
       const { data } = await axios.get(
         "https://oxbi-api-qa.onrender.com/sites"
       );
-      return data;
+      setSites(data);
     } catch (error) {
       console.error(error);
-      return [];
     }
   };
 
@@ -45,9 +42,7 @@ export default function StepOneForm({
   };
 
   useEffect(() => {
-    loadSites().then((sites: Site[]) => {
-      setSites(sites || []);
-    });
+    loadSites();
   }, []);
 
   const dropDownItems = sites.map((site) => ({

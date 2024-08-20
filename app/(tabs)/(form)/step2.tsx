@@ -12,18 +12,37 @@ interface StepTwoFormProps {
 interface Client {
   _id: string;
   name: string;
-  email: string;
-  phone: string;
+  company?: string;
 }
 
 export default function StepTwoForm({ setClient, error }: StepTwoFormProps) {
   const styles = useGlobalStyles();
-  const [value, setValue] = React.useState("0");
+  const [value, setValue] = React.useState<string | null>(null);
+  const [clients, setClients] = React.useState<Client[]>([]);
+  const maxClients = 6;
 
-  const handleSelect = (e: any) => {
-    setValue(e);
-    setClient(e);
+  const loadClients = async () => {
+    try {
+      const { data } = await axios.get(
+        "https://oxbi-api-qa.onrender.com/clients"
+      );
+      setClients(data);
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  const handleSelect = (e: string) => {
+    setValue(e);
+    const selectedClient = clients.find((client) => client._id === e);
+    if (selectedClient) {
+      setClient(selectedClient);
+    }
+  };
+
+  React.useEffect(() => {
+    loadClients();
+  }, []);
 
   return (
     <View style={styles.screenContainer}>
@@ -43,23 +62,15 @@ export default function StepTwoForm({ setClient, error }: StepTwoFormProps) {
         </View>
       </View>
       <View style={{ paddingTop: 12 }}>
-        <RadioButton.Group onValueChange={handleSelect} value={value}>
-          <View style={styles.radioButton}>
-            <RadioButton value="Juan Pérez" />
-            <Text style={styles.radioButtonLabel}>Juan Pérez</Text>
-          </View>
-          <View style={styles.radioButton}>
-            <RadioButton value="Roberto Martínez" />
-            <Text style={styles.radioButtonLabel}>Roberto Martínez</Text>
-          </View>
-          <View style={styles.radioButton}>
-            <RadioButton value="Alfredo Sánchez" />
-            <Text style={styles.radioButtonLabel}>Alfredo Sánchez</Text>
-          </View>
-          <View style={styles.radioButton}>
-            <RadioButton value="Raúl Vega" />
-            <Text style={styles.radioButtonLabel}>Raúl Vega</Text>
-          </View>
+        <RadioButton.Group onValueChange={handleSelect} value={value ?? ""}>
+          {clients.slice(0, maxClients).map((client) => (
+            <View key={client._id} style={styles.radioButton}>
+              <RadioButton value={client._id} />
+              <Text style={styles.radioButtonLabel}>
+                {client.name}, {client.company}
+              </Text>
+            </View>
+          ))}
         </RadioButton.Group>
         {error && <Text style={{ color: "red", marginTop: 8 }}>{error}</Text>}
       </View>
