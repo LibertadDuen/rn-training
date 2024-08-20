@@ -22,8 +22,19 @@ interface StepThreeFormProps {
 
 export default function StepThreeForm({ setProducts }: StepThreeFormProps) {
   const [product, setProduct] = useState();
-  const [items, setItems] = useState([]);
-  const [quantity, setQuantity] = useState("");
+  const [items, setItems] = useState([
+    {
+      label: "",
+      value: "",
+      info: {
+        _id: "",
+        quantity: 0,
+        name: "",
+        unit: "",
+      },
+    },
+  ]);
+  const [quantity, setQuantity] = useState("0");
   const styles = useGlobalStyles();
 
   const {
@@ -37,6 +48,7 @@ export default function StepThreeForm({ setProducts }: StepThreeFormProps) {
         const products = response.data.products.map((product: Product) => ({
           label: product.name,
           value: product._id,
+          info: product,
         }));
         setItems(products);
       })
@@ -51,10 +63,32 @@ export default function StepThreeForm({ setProducts }: StepThreeFormProps) {
 
   const handleSelect = (e: any) => {
     setProduct(e);
+    const productToUpdate = items.find((item) => item.value === e);
+    if (productToUpdate) {
+      const productInfo = productToUpdate.info as Product;
+      setProducts({
+        description: productInfo.description,
+        name: productInfo.name,
+        unit: productInfo.unit,
+        idProduct: productInfo._id,
+        sku: productInfo.sku,
+        vendor: productInfo.vendor,
+        quantity: parseInt(quantity),
+      });
+    }
   };
 
-  const handleQuantity = (e: any) => {
+  const handleQuantity = (e: string) => {
     setQuantity(e);
+
+    const productToUpdate: any = items.find((item) => item.value === product);
+
+    if (productToUpdate) {
+      setProducts({
+        ...productToUpdate.info,
+        quantity: parseInt(e),
+      });
+    }
   };
 
   return (

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View } from "react-native";
+import { ScrollView, View } from "react-native";
 import StepOneForm from "./(form)/step1";
 import StepTwoForm from "./(form)/step2";
 import StepThreeForm from "./(form)/step3";
@@ -28,7 +28,6 @@ interface Client {
   email: string;
   phone: string;
 }
-
 interface Product {
   quantity: number;
   name: string;
@@ -106,6 +105,7 @@ export default function StepForm() {
             dateDelivery={dateDelivery}
             timeDelivery={timeDelivery}
             timeSent={timeSent}
+            products={products}
           />
         );
       default:
@@ -129,27 +129,10 @@ export default function StepForm() {
       updateRequested: false,
       shippingSite: shippingSite,
       client: client,
-      bulk: [
-        {
-          quantity: 1,
-          unitWeight: 10,
-          length: 15,
-          width: 14,
-          height: 13,
-          description: "Prueba de descripción",
-        },
-        {
-          quantity: 2,
-          unitWeight: 10,
-          length: 15,
-          width: 14,
-          height: 13,
-          description: "Prueba de descripción con 2 bulks",
-        },
-      ],
+      bulk: [],
       tripFinalized: false,
       evidences: [],
-      product: [],
+      product: [products],
     };
 
     axios
@@ -169,7 +152,8 @@ export default function StepForm() {
         marginHorizontal: 16,
       }}
     >
-      {renderStep()}
+      <ScrollView>{renderStep()}</ScrollView>
+
       <View
         style={{
           justifyContent: "center",
@@ -179,7 +163,7 @@ export default function StepForm() {
           marginBottom: 16,
         }}
       >
-        {currentStep < 4 && (
+        {currentStep < 5 && (
           <Button
             mode="contained"
             style={styles.primaryButton}
@@ -189,7 +173,7 @@ export default function StepForm() {
             Continuar
           </Button>
         )}
-        {currentStep === 4 && (
+        {currentStep === 5 && (
           <Button
             mode="contained"
             style={styles.primaryButton}
