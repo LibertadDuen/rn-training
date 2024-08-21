@@ -45,6 +45,19 @@ export const useGlobalStyles = () => {
       fontSize: 18,
       fontFamily: "Roboto-Medium",
     },
+    secondaryButton: {
+      justifyContent: "center",
+      height: 48,
+      display: "flex",
+      borderRadius: 5,
+      alignSelf: "stretch",
+      alignItems: "center",
+    },
+    secondaryButtonLabel: {
+      fontSize: 18,
+      color: theme.colors.brandPrimary,
+      fontFamily: "Roboto-Medium",
+    },
     tertiaryButton: {
       justifyContent: "center",
       height: 48,
