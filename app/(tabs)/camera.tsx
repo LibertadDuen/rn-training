@@ -1,14 +1,14 @@
-import * as React from "react";
+import React from "react";
 
 import { View, Image } from "react-native";
-import { customText, Divider, Icon, Button } from "react-native-paper";
+import { customText, Icon, Button, Divider } from "react-native-paper";
 import { useAppTheme } from "../_layout";
 import { useGlobalStyles } from "@/styles/globalStyles";
 import * as ImagePicker from "expo-image-picker";
 
 export const Text = customText<"customVariant">();
 
-export default function Form() {
+export default function CameraScreen() {
   const styles = useGlobalStyles();
   const {
     colors: { ...colors },
@@ -33,6 +33,10 @@ export default function Form() {
       quality: 1,
     });
     console.log(result);
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
   };
 
   const launchCamera = async () => {
@@ -47,6 +51,9 @@ export default function Form() {
       setImage(result.assets[0].uri);
     }
   };
+  if (hasPermission === false) {
+    return <Text>No tienes permisos para acceder a la galería</Text>;
+  }
 
   return (
     <View
@@ -107,23 +114,31 @@ export default function Form() {
               </Text>
             </View>
           </Button>
-        </View>
-        <View>
-          <View style={{ flexDirection: "row", gap: 8, marginVertical: 16 }}>
-            <Icon source="eye" size={24} color="black" />
-            <Text style={styles.subtitle}>Vista Previa</Text>
-          </View>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Image
-              source={{ uri: image }}
-              style={{ height: 200, width: 200 }}
+          {image && (
+            <Divider
+              style={{
+                marginVertical: 2,
+                borderWidth: 0.5,
+                borderColor: colors.brandQuarterlyDark2,
+              }}
             />
+          )}
+          <View style={{ alignItems: "center", justifyContent: "center" }}>
+            {image && (
+              <Image
+                source={{ uri: image }}
+                style={{ width: "100%", height: 250 }}
+              />
+            )}
+            {image && (
+              <Button
+                mode="contained"
+                style={[styles.primaryButton, { marginTop: 16 }]}
+                labelStyle={styles.primaryButtonLabel}
+              >
+                Continuar
+              </Button>
+            )}
           </View>
         </View>
       </View>

@@ -19,6 +19,8 @@ interface Product {
 interface StepThreeFormProps {
   products?: Product;
   setProducts: (product: Product) => void;
+  currentStep: number;
+  totalSteps: number;
 }
 
 export default function StepThreeForm({

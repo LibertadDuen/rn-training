@@ -11,6 +11,8 @@ interface StepThreeFormProps {
   setDateDelivery: (date: any) => void;
   setTimeSent: (time: any) => void;
   setTimeDelivery: (time: any) => void;
+  currentStep: number;
+  totalSteps: number;
 }
 
 export default function StepFourForm({
@@ -29,14 +31,8 @@ export default function StepFourForm({
           <Divider style={styles.divider} />
         </View>
         <View>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              marginBottom: 8,
-            }}
-          >
-            <Icon source="calendar-heart" size={24} />
+          <View style={{ flexDirection: "row", gap: 8 }}>
+            <Icon source="calendar-heart" size={24} color="black" />
             <Text style={styles.subtitle}>Fecha</Text>
           </View>
           <Text style={styles.text}>

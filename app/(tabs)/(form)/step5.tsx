@@ -13,6 +13,8 @@ interface ShipmentProps {
   shippingSite: any;
   client: any;
   products: any;
+  currentStep: number;
+  totalSteps: number;
 }
 
 export default function StepFiveForm(props: ShipmentProps) {
@@ -25,17 +27,11 @@ export default function StepFiveForm(props: ShipmentProps) {
           <Text style={styles.title}>Programa un nuevo envío</Text>
           <Divider style={styles.divider} />
         </View>
+        <View style={{ flexDirection: "row", gap: 8 }}>
+          <Icon source="pencil-circle" size={24} color="black" />
+          <Text style={styles.subtitle}>Confirma</Text>
+        </View>
         <View>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              marginBottom: 8,
-            }}
-          >
-            <Icon source="pencil-circle" size={24} />
-            <Text style={styles.subtitle}>Confirma</Text>
-          </View>
           <Text style={styles.text}>
             Revisa la información del envío, y regístrarlo de ser correcta.{" "}
           </Text>
