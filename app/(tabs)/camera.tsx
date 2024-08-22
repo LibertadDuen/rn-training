@@ -14,14 +14,18 @@ export default function CameraScreen() {
     colors: { ...colors },
   } = useAppTheme();
 
-  const [hasPermission, setHasPermission] = React.useState(false);
+  const [hasGalleryPermission, setHasGalleryPermission] = React.useState(false);
+  const [hasCameraPermission, setHasCameraPermission] = React.useState(false);
   const [image, setImage] = React.useState("");
+  const [file, setFile] = React.useState<File>();
 
   React.useEffect(() => {
     (async () => {
       const galleryStatus =
         await ImagePicker.requestMediaLibraryPermissionsAsync();
-      setHasPermission(galleryStatus.status === "granted");
+      const cameraStatus = await ImagePicker.requestCameraPermissionsAsync();
+      setHasGalleryPermission(galleryStatus.status === "granted");
+      setHasCameraPermission(cameraStatus.status === "granted");
     })(),
       [];
   });
@@ -32,9 +36,9 @@ export default function CameraScreen() {
       allowsEditing: true,
       quality: 1,
     });
-    console.log(result);
-
     if (!result.canceled) {
+      // const file = new File([result.assets[0]], result.assets[0].uri);
+      // setFile(file);
       setImage(result.assets[0].uri);
     }
   };
@@ -46,12 +50,11 @@ export default function CameraScreen() {
       quality: 1,
       cameraType: ImagePicker.CameraType.back,
     });
-    console.log(result);
     if (result.canceled === false) {
       setImage(result.assets[0].uri);
     }
   };
-  if (hasPermission === false) {
+  if (!hasGalleryPermission || !hasCameraPermission) {
     return <Text>No tienes permisos para acceder a la galería</Text>;
   }
 
