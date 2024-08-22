@@ -19,6 +19,8 @@ interface StepOneFormProps {
   shippingSite?: ShippingSite;
   setShippingSite: (site: ShippingSite) => void;
   error: string | undefined;
+  currentStep: number;
+  totalSteps: number;
 }
 
 export default function StepOneForm({

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ScrollView, View } from "react-native";
+import { ScrollView, View, SafeAreaView } from "react-native";
 import StepOneForm from "./(form)/step1";
 import StepTwoForm from "./(form)/step2";
 import StepThreeForm from "./(form)/step3";
@@ -7,6 +7,7 @@ import StepFourForm from "./(form)/step4";
 import StepFiveForm from "./(form)/step5";
 import { Button } from "react-native-paper";
 import { useGlobalStyles } from "@/styles/globalStyles";
+import ProgressBar from "@/components/ProgressBar";
 import axios from "axios";
 
 interface ShippingSite {
@@ -54,6 +55,8 @@ export default function StepForm() {
   const [currentStep, setCurrentStep] = useState(1);
   const [error, setError] = useState<string>();
 
+  const totalSteps = 5;
+
   const validateStepOne = () => {
     if (!shippingSite) {
       setError("Por favor, selecciona una sede.");
@@ -90,14 +93,29 @@ export default function StepForm() {
             setShippingSite={setShippingSite}
             shippingSite={shippingSite!}
             error={error}
+            currentStep={currentStep}
+            totalSteps={totalSteps}
           />
         );
       case 2:
         return (
-          <StepTwoForm setClient={setClient} client={client!} error={error} />
+          <StepTwoForm
+            setClient={setClient}
+            client={client!}
+            error={error}
+            currentStep={currentStep}
+            totalSteps={totalSteps}
+          />
         );
       case 3:
-        return <StepThreeForm setProducts={setProducts} products={products} />;
+        return (
+          <StepThreeForm
+            setProducts={setProducts}
+            products={products}
+            currentStep={currentStep}
+            totalSteps={totalSteps}
+          />
+        );
       case 4:
         return (
           <StepFourForm
@@ -105,6 +123,8 @@ export default function StepForm() {
             setTimeSent={setTimeSent}
             setDateDelivery={setDateDelivery}
             setDateSent={setDateSent}
+            currentStep={currentStep}
+            totalSteps={totalSteps}
           />
         );
       case 5:
@@ -117,6 +137,8 @@ export default function StepForm() {
             timeDelivery={timeDelivery}
             timeSent={timeSent}
             products={products}
+            currentStep={currentStep}
+            totalSteps={totalSteps}
           />
         );
       default:
@@ -125,6 +147,8 @@ export default function StepForm() {
             setShippingSite={setShippingSite}
             shippingSite={shippingSite!}
             error={error}
+            currentStep={currentStep}
+            totalSteps={totalSteps}
           />
         );
     }
@@ -180,54 +204,56 @@ export default function StepForm() {
   };
 
   return (
-    <View
-      style={{
-        flex: 1,
-        marginHorizontal: 16,
-      }}
-    >
-      <ScrollView>{renderStep()}</ScrollView>
-
-      <View
+    <>
+      <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
+      <SafeAreaView
         style={{
-          justifyContent: "center",
-          gap: 16,
-          flexDirection: "column",
-          alignItems: "center",
-          marginBottom: 16,
+          flex: 1,
+          marginHorizontal: 16,
         }}
       >
-        {currentStep < 5 && (
-          <Button
-            mode="contained"
-            style={styles.primaryButton}
-            labelStyle={styles.primaryButtonLabel}
-            onPress={nextStep}
-          >
-            Continuar
-          </Button>
-        )}
-        {currentStep === 5 && (
-          <Button
-            mode="contained"
-            style={styles.primaryButton}
-            labelStyle={styles.primaryButtonLabel}
-            onPress={onSubmit}
-          >
-            Registrar
-          </Button>
-        )}
-        {currentStep > 1 && (
-          <Button
-            mode="contained"
-            onPress={prevStep}
-            style={styles.tertiaryButton}
-            labelStyle={styles.tertiaryButtonLabel}
-          >
-            Regresar
-          </Button>
-        )}
-      </View>
-    </View>
+        <ScrollView>{renderStep()}</ScrollView>
+        <View
+          style={{
+            justifyContent: "center",
+            gap: 16,
+            flexDirection: "column",
+            alignItems: "center",
+            marginBottom: 16,
+          }}
+        >
+          {currentStep < 5 && (
+            <Button
+              mode="contained"
+              style={styles.primaryButton}
+              labelStyle={styles.primaryButtonLabel}
+              onPress={nextStep}
+            >
+              Continuar
+            </Button>
+          )}
+          {currentStep === 5 && (
+            <Button
+              mode="contained"
+              style={styles.primaryButton}
+              labelStyle={styles.primaryButtonLabel}
+              onPress={onSubmit}
+            >
+              Registrar
+            </Button>
+          )}
+          {currentStep > 1 && (
+            <Button
+              mode="contained"
+              onPress={prevStep}
+              style={styles.tertiaryButton}
+              labelStyle={styles.tertiaryButtonLabel}
+            >
+              Regresar
+            </Button>
+          )}
+        </View>
+      </SafeAreaView>
+    </>
   );
 }

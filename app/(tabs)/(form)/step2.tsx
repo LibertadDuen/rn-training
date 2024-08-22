@@ -20,6 +20,8 @@ interface StepTwoFormProps {
   client?: Client;
   setClient: (client: Client) => void;
   error: string | undefined;
+  currentStep: number;
+  totalSteps: number;
 }
 
 export default function StepTwoForm({

@@ -1,15 +1,16 @@
-import * as React from "react";
+import React, { useState } from "react";
 
-import { View } from "react-native";
-import { customText, Divider, Icon, Button } from "react-native-paper";
+import { View, Image } from "react-native";
+import { customText, Icon, Button, Divider } from "react-native-paper";
 import { useAppTheme } from "../_layout";
 import { useGlobalStyles } from "@/styles/globalStyles";
 import * as ImagePicker from "expo-image-picker";
 
 export const Text = customText<"customVariant">();
 
-export default function Form() {
+export default function CameraScreen() {
   const styles = useGlobalStyles();
+  const [image, setImage] = useState<string | null>(null);
   const {
     colors: { ...colors },
   } = useAppTheme();
@@ -33,7 +34,15 @@ export default function Form() {
       quality: 1,
     });
     console.log(result);
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
   };
+
+  if (hasPermission === false) {
+    return <Text>No tienes permisos para acceder a la galería</Text>;
+  }
 
   return (
     <View
@@ -90,6 +99,32 @@ export default function Form() {
               </Text>
             </View>
           </Button>
+          {image && (
+            <Divider
+              style={{
+                marginVertical: 2,
+                borderWidth: 0.5,
+                borderColor: colors.brandQuarterlyDark2,
+              }}
+            />
+          )}
+          <View style={{ alignItems: "center", justifyContent: "center" }}>
+            {image && (
+              <Image
+                source={{ uri: image }}
+                style={{ width: "100%", height: 250 }}
+              />
+            )}
+            {image && (
+              <Button
+                mode="contained"
+                style={[styles.primaryButton, { marginTop: 16 }]}
+                labelStyle={styles.primaryButtonLabel}
+              >
+                Continuar
+              </Button>
+            )}
+          </View>
         </View>
       </View>
     </View>

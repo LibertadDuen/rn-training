@@ -17,7 +17,6 @@ export const useGlobalStyles = () => {
     },
     subtitle: {
       fontSize: 18,
-      fontWeight: "700",
       marginBottom: 8,
       fontFamily: "Work-Sans",
     },
@@ -63,7 +62,7 @@ export const useGlobalStyles = () => {
       height: 48,
       display: "flex",
       borderRadius: 5,
-      backgroundColor: theme.colors.brandQuarterlyLight,
+      backgroundColor: "transparent",
       alignSelf: "stretch",
       alignItems: "center",
     },
