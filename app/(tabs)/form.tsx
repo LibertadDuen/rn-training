@@ -216,10 +216,10 @@ export default function StepForm() {
         <View
           style={{
             justifyContent: "center",
-            gap: 16,
+            gap: 8,
             flexDirection: "column",
             alignItems: "center",
-            marginBottom: 16,
+            marginBottom: 8,
           }}
         >
           {currentStep < 5 && (

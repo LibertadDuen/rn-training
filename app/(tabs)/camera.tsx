@@ -120,7 +120,7 @@ export default function CameraScreen() {
           {image && (
             <Divider
               style={{
-                marginVertical: 2,
+                marginVertical: 1,
                 borderWidth: 0.5,
                 borderColor: colors.brandQuarterlyDark2,
               }}
