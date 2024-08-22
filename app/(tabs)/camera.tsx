@@ -73,36 +73,38 @@ export default function CameraScreen() {
             gap: 16,
           }}
         >
-          <Button mode="outlined" style={styles.secondaryButton}>
-            <View style={{ flexDirection: "row", gap: 8 }}>
-              <Icon
-                source="camera-outline"
-                size={24}
-                color={colors.brandPrimary}
-              />
-              <Text style={styles.secondaryButtonLabel}>Tomar foto</Text>
-            </View>
-          </Button>
-          <Button
-            onPress={launchGallery}
-            mode="outlined"
-            style={styles.secondaryButton}
-          >
-            <View style={{ flexDirection: "row", gap: 8 }}>
-              <Icon
-                source="image-multiple-outline"
-                size={24}
-                color={colors.brandPrimary}
-              />
-              <Text style={styles.secondaryButtonLabel}>
-                Seleccionar imagen
-              </Text>
-            </View>
-          </Button>
+          <View style={{ gap: 8 }}>
+            <Button mode="outlined" style={styles.secondaryButton}>
+              <View style={{ flexDirection: "row", gap: 8 }}>
+                <Icon
+                  source="camera-outline"
+                  size={24}
+                  color={colors.brandPrimary}
+                />
+                <Text style={styles.secondaryButtonLabel}>Tomar foto</Text>
+              </View>
+            </Button>
+            <Button
+              onPress={launchGallery}
+              mode="outlined"
+              style={styles.secondaryButton}
+            >
+              <View style={{ flexDirection: "row", gap: 8 }}>
+                <Icon
+                  source="image-multiple-outline"
+                  size={24}
+                  color={colors.brandPrimary}
+                />
+                <Text style={styles.secondaryButtonLabel}>
+                  Seleccionar imagen
+                </Text>
+              </View>
+            </Button>
+          </View>
           {image && (
             <Divider
               style={{
-                marginVertical: 2,
+                marginVertical: 1,
                 borderWidth: 0.5,
                 borderColor: colors.brandQuarterlyDark2,
               }}
