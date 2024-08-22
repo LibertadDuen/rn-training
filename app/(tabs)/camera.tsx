@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { View } from "react-native";
+import { View, Image } from "react-native";
 import { customText, Divider, Icon, Button } from "react-native-paper";
 import { useAppTheme } from "../_layout";
 import { useGlobalStyles } from "@/styles/globalStyles";
@@ -15,6 +15,7 @@ export default function Form() {
   } = useAppTheme();
 
   const [hasPermission, setHasPermission] = React.useState(false);
+  const [image, setImage] = React.useState("");
 
   React.useEffect(() => {
     (async () => {
@@ -29,10 +30,22 @@ export default function Form() {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
-      aspect: [4, 3],
       quality: 1,
     });
     console.log(result);
+  };
+
+  const launchCamera = async () => {
+    const result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      quality: 1,
+      cameraType: ImagePicker.CameraType.back,
+    });
+    console.log(result);
+    if (result.canceled === false) {
+      setImage(result.assets[0].uri);
+    }
   };
 
   return (
@@ -64,7 +77,11 @@ export default function Form() {
             gap: 16,
           }}
         >
-          <Button mode="outlined" style={styles.secondaryButton}>
+          <Button
+            onPress={launchCamera}
+            mode="outlined"
+            style={styles.secondaryButton}
+          >
             <View style={{ flexDirection: "row", gap: 8 }}>
               <Icon
                 source="camera-outline"
@@ -90,6 +107,24 @@ export default function Form() {
               </Text>
             </View>
           </Button>
+        </View>
+        <View>
+          <View style={{ flexDirection: "row", gap: 8, marginVertical: 16 }}>
+            <Icon source="eye" size={24} color="black" />
+            <Text style={styles.subtitle}>Vista Previa</Text>
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Image
+              source={{ uri: image }}
+              style={{ height: 200, width: 200 }}
+            />
+          </View>
         </View>
       </View>
     </View>

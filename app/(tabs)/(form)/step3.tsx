@@ -128,7 +128,7 @@ export default function StepThreeForm({
             style={{ backgroundColor: "#f2f2f2", width: "45%" }}
             placeholder="Cantidad"
             onChangeText={handleQuantity}
-            value={products ? products.quantity.toString() : quantity}
+            value={products?.quantity ? products.quantity.toString() : quantity}
             keyboardType="numeric"
           />
         </View>

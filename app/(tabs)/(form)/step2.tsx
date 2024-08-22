@@ -101,8 +101,8 @@ export default function StepTwoForm({
           onValueChange={handleSelect}
           value={client ? client._id : value._id}
         >
-          {clients.slice(0, maxClients).map((client) => (
-            <View key={client.info._id} style={styles.radioButton}>
+          {clients.slice(0, maxClients).map((client, index) => (
+            <View key={index} style={styles.radioButton}>
               <RadioButton value={client.info._id} />
               <Text style={styles.radioButtonLabel}>
                 {client.info.name}, {client.info.company}
