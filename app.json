@@ -1,8 +1,8 @@
 {
   "expo": {
     "assetBundlePatterns": ["**/*"],
-    "name": "rn-training",
-    "slug": "rn-training",
+    "name": "OX BI",
+    "slug": "Programa tus envíos",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -14,12 +14,14 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "buildNumber": "1.0.0",
+      "supportsTablet": false
     },
     "android": {
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#EDEDED"
       }
     },
     "web": {
