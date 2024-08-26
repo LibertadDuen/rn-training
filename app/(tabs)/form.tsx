@@ -59,6 +59,10 @@ export default function StepForm() {
 
   const totalSteps = 5;
 
+  const handleDismiss = () => {
+    setVisible(false);
+  };
+
   const validateStepOne = () => {
     if (!shippingSite) {
       setError("Por favor, selecciona una sede.");
@@ -256,7 +260,7 @@ export default function StepForm() {
             </Button>
           )}
         </View>
-        <SuccessModal visible={visible} />
+        <SuccessModal visible={visible} onDismiss={handleDismiss} />
       </SafeAreaView>
     </>
   );
