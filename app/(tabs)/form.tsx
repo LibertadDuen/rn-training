@@ -5,6 +5,7 @@ import StepTwoForm from "./(form)/step2";
 import StepThreeForm from "./(form)/step3";
 import StepFourForm from "./(form)/step4";
 import StepFiveForm from "./(form)/step5";
+import SuccessModal from "../components/successModal";
 import { Button } from "react-native-paper";
 import { useGlobalStyles } from "@/styles/globalStyles";
 import ProgressBar from "@/components/ProgressBar";
@@ -54,6 +55,7 @@ export default function StepForm() {
 
   const [currentStep, setCurrentStep] = useState(1);
   const [error, setError] = useState<string>();
+  const [visible, setVisible] = useState(false);
 
   const totalSteps = 5;
 
@@ -197,6 +199,7 @@ export default function StepForm() {
       .post("http://localhost:3000/shipments/create", shipment)
       .then((response) => {
         console.log(response.data);
+        setVisible(true);
       })
       .catch((error) => {
         console.error("Error sending data: ", error);
@@ -253,6 +256,7 @@ export default function StepForm() {
             </Button>
           )}
         </View>
+        <SuccessModal visible={visible} />
       </SafeAreaView>
     </>
   );
