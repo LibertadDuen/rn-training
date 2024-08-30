@@ -49,7 +49,7 @@ export default function StepThreeForm({
 
   const getProducts = async () => {
     await axios
-      .get("http://localhost:3000/products/active")
+      .get("https://oxbi-api-qa.onrender.com/products/active")
       .then((response) => {
         const products = response.data.products.map((product: Product) => ({
           label: product.name,

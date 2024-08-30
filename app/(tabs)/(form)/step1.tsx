@@ -40,7 +40,7 @@ export default function StepOneForm({
 
   const getSites = () => {
     axios
-      .get("http://localhost:3000/sites")
+      .get("https://oxbi-api-qa.onrender.com/sites")
       .then((response) => {
         const sites = response.data.map((site: ShippingSite) => ({
           label: site.siteName,

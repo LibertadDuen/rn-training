@@ -53,7 +53,7 @@ export default function StepTwoForm({
 
   const getClients = async () => {
     await axios
-      .get("http://localhost:3000/clients")
+      .get("https://oxbi-api-qa.onrender.com/clients")
       .then((response) => {
         const clients = response.data.map((client: Client) => ({
           label: client.name,

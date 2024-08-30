@@ -200,7 +200,7 @@ export default function StepForm() {
     };
 
     axios
-      .post("http://localhost:3000/shipments/create", shipment)
+      .post("https://oxbi-api-qa.onrender.com/shipments/create", shipment)
       .then((response) => {
         console.log(response.data);
         setVisible(true);
